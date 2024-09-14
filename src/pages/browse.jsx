@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from 'react-router-dom';
 
-export default function Buy() {
+export default function Browse() {
     const location = useLocation();
     const { school } = location.state || {}; // Access the `school` from state
 
