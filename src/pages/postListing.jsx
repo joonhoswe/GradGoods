@@ -33,7 +33,52 @@ export default function postListing() {
 
     const [fileNames, setFileNames] = useState([]);
 
+    const [posted, setPosted] = useState(false);
+    const [submitClicked, setSubmitClicked] = useState(false);
+
     let images = [];
+
+    // submit the form to the database along with images to AWS S3 bucket
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+        
+        if (!isFormValid || !submitClicked || !isListingValid) return; // Prevent invalid submissions (client-side validation)
+        
+        // Retrieve the image URLs from AWS S3
+        images = (await handleAWS());
+
+        // Data to be sent to the database
+        const dataForSql = {
+            owner,
+            address,
+            state,
+            zipCode,
+            city,
+            rent,
+            homeType,
+            unit,
+            rooms,
+            bathrooms,
+            gender,
+            joinedListing,
+            emails,
+            images,
+        };
+
+        console.log("Submitting form: ", dataForSql);
+
+        try {
+            const response = await axios.post(`${process.env.VITE_BACKEND_URL}/api/post/`, dataForSql);
+            setPosted(true);
+            clearForm();
+            console.log('Response:', response.data);
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        } finally {
+            setSubmitClicked(false);
+        }
+    };
 
     // append images to the imageObjects array
     const handleFileChange = (event) => {

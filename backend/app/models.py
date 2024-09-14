@@ -10,7 +10,7 @@ class Listing(models.Model):
     itemCategory = models.CharField(max_length=40, default='A Category')
     school = models.CharField(max_length=80, default='School')
     description = models.CharField(max_length=1000, default='Description')
-    price = models.PositiveIntegerField(max_length=5, default ='0')
+    price = models.PositiveIntegerField(default ='0')
     imageURLs = ArrayField(models.CharField(max_length=500, blank=True), blank=True, default = list)
     
     def __str__(self):
