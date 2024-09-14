@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from  'react';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+
 import axios from 'axios';
 import AWS from 'aws-sdk';
 
@@ -17,7 +19,7 @@ function postListing() {
     const [imageURLs, setImageURLs] = useState([]);
 
     return
-    <div>
+    <div className='h-full'>
 
     </div>
 }
