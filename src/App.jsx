@@ -25,6 +25,7 @@ function App() {
 
   return (
     <div className="mt-[35vh]">
+      <Navbar/>
       <Heading className="text-center" as="h2" size="3xl" p={0} noOfLines={1}>
         GradGoods
       </Heading>
