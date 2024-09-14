@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+// import reactLogo from "./assets/react.svg";
+// import viteLogo from "/vite.svg";
+import "./App.css";
+import {
+  Input,
+  InputGroup,
+  InputRightAddon,
+  Heading,
+  Box,
+} from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [school, setSchool] = useState("");
+
+  const handleInputChange = (event) => {
+    setSchool(event.target.value);
+  };
+
+  const handleSearch = () => {
+    console.log("search", school);
+  };
 
   return (
-    <>
-      <div className=''>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="mt-[35vh]">
+      <Heading className="text-center" as="h2" size="3xl" p={0} noOfLines={1}>
+        GradGoods
+      </Heading>
+      <div className="flex flex-row justify-center">
+        <InputGroup size="lg" width="45vw" className="mt-8">
+          <Input
+            onChange={handleInputChange}
+            value={school}
+            placeholder="Search for your school"
+          />
+          <InputRightAddon onClick={handleSearch}>
+            <SearchIcon color="gray.600" />
+          </InputRightAddon>
+        </InputGroup>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
