@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Buy from './components/buy';
+import Buy from './pages/buy';
 import "./App.css";
 import Navbar from "./components/navbar";
 import {
@@ -31,7 +31,6 @@ function App() {
     
     <div>
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/buy" element={<Buy />} />
       </Routes>
 
