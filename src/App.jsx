@@ -1,6 +1,7 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Routes, Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Buy from './components/buy';
 import "./App.css";
 import Navbar from "./components/navbar";
 import {
@@ -15,16 +16,25 @@ import { SearchIcon } from "@chakra-ui/icons";
 function App() {
   const [school, setSchool] = useState("");
 
+  const navigate = useNavigate();
+
   const handleInputChange = (event) => {
     setSchool(event.target.value);
   };
 
   const handleSearch = () => {
     console.log("search", school);
+    navigate('/buy', { state: { school } });
   };
 
   return (
+    
     <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/buy" element={<Buy />} />
+      </Routes>
+
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
       </div>
