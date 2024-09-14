@@ -1,17 +1,16 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 
 class Listing(models.Model):
-    #columns of the sqlite(soon to be postgresql database are defined here)
-    #CharField(): used for string
-    #PositiveIntegerField(): used for int
+    # Columns of the SQLite (soon to be PostgreSQL) database are defined here
     owner = models.CharField(max_length=20, default='admin')
     itemName = models.CharField(max_length=40, default='An Item')
     itemCategory = models.CharField(max_length=40, default='A Category')
     school = models.CharField(max_length=80, default='School')
     description = models.CharField(max_length=1000, default='Description')
-    price = models.PositiveIntegerField(default ='0')
-    imageURLs = ArrayField(models.CharField(max_length=500, blank=True), blank=True, default = list)
+    price = models.PositiveIntegerField(default='0')
     
+    # Temporarily replace ArrayField with TextField for SQLite compatibility
+    imageURLs = models.TextField(blank=True, default='')  # Store URLs as a comma-separated string
+
     def __str__(self):
-        return self.address
+        return self.itemName
