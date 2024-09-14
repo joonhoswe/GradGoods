@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import Browse from './pages/browse';
 import "./App.css";
 import Navbar from "./components/navbar";
+import PostListing from './pages/postListing';
 import { Input, InputGroup, InputRightAddon, Heading } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
@@ -26,6 +27,7 @@ function App() {
         element={<Home onSearch={handleSearch} onInputChange={handleInputChange} school={school} />} 
       />
       <Route path="/browse" element={<Browse />} />
+      <Route path="/postListing" element={<PostListing />} />
     </Routes>
   );
 }

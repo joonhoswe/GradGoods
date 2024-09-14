@@ -2,9 +2,9 @@ import { React, useState, useEffect } from  'react';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 
 import axios from 'axios';
-import AWS from 'aws-sdk';
+// import AWS from 'aws-sdk';
 
-function postListing() {
+export default function postListing() {
 
     const [listing, setListing] = useState([]);
 
@@ -18,8 +18,9 @@ function postListing() {
     const [imageObjects, setImageObjects] = useState([]);
     const [imageURLs, setImageURLs] = useState([]);
 
-    return
+    return (
     <div className='h-full'>
-
+        <a> hi </a>
     </div>
+    );
 }
