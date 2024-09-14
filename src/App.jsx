@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Buy from './pages/buy';
+import Browse from './pages/browse';
 import "./App.css";
 import Navbar from "./components/navbar";
 import { Input, InputGroup, InputRightAddon, Heading } from "@chakra-ui/react";
@@ -16,7 +16,7 @@ function App() {
 
   const handleSearch = () => {
     console.log("search", school);  // Logs the search value
-    navigate("/buy", { state: { school } });  // Passes the search value to Buy page
+    navigate("/browse", { state: { school } });  // Passes the search value to Buy page
   };
 
   return (
@@ -25,7 +25,7 @@ function App() {
         path="/" 
         element={<Home onSearch={handleSearch} onInputChange={handleInputChange} school={school} />} 
       />
-      <Route path="/buy" element={<Buy />} />
+      <Route path="/browse" element={<Browse />} />
     </Routes>
   );
 }
