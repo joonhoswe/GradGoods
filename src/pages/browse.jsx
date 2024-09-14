@@ -12,12 +12,16 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import Navbar from "../components/navbar";
+import BrowseItemDisplay from "../components/BrowseItemDisplay";
 
 export default function Browse() {
   const location = useLocation();
   const { school } = location.state || {}; // Access the `school` from state
   const [search, setSearch] = useState("");
+  const tagOptions = ["Clothing", "Electronics", "Shoes", "Textbooks"];
   const [filters, setFilters] = useState([]);
+  const [sizeFilter, setSizeFilter] = useState("");
+  const [priceFilter, setPriceFilter] = useState("");
 
   if (!school) {
     console.error("error: school not found");
@@ -25,6 +29,22 @@ export default function Browse() {
 
   const onInputChange = (event) => {
     setSearch(event.target.value);
+  };
+
+  const handleTagClick = (name) => {
+    if (filters.includes(name)) {
+      setFilters(filters.filter((filter) => filter !== name));
+    } else {
+      setFilters([...filters, name]);
+    }
+  };
+
+  const handleSize = (event) => {
+    setSizeFilter(event.target.value);
+  };
+
+  const handlePrice = (event) => {
+    setPriceFilter(event.target.value);
   };
 
   return (
@@ -44,18 +64,20 @@ export default function Browse() {
         </Heading>
         <div className="flex flex-row justify-between">
           <HStack spacing="8px">
-            <Tag size="lg" borderRadius="full">
-              Clothing
-            </Tag>
-            <Tag size="lg" borderRadius="full">
-              Electronics
-            </Tag>
-            <Tag size="lg" borderRadius="full">
-              Shoes
-            </Tag>
-            <Tag size="lg" borderRadius="full">
-              Textbooks
-            </Tag>
+            {tagOptions.map((tagName, index) => {
+              return (
+                <Tag
+                  className="hover:cursor-pointer"
+                  key={index}
+                  size="lg"
+                  borderRadius="full"
+                  onClick={() => handleTagClick(tagName)}
+                  colorScheme={filters.includes(tagName) ? "green" : "gray"}
+                >
+                  {tagName}
+                </Tag>
+              );
+            })}
           </HStack>
           <InputGroup width="30vw" className="">
             <Input
@@ -77,7 +99,7 @@ export default function Browse() {
         <HStack spacing={4}>
           <>Filter by:</>
           <div className="w-24">
-            <Select placeholder="Size" size="sm">
+            <Select onChange={handleSize} placeholder="Size" size="sm">
               <option value="XXS">XXS</option>
               <option value="XS">XS</option>
               <option value="S">S</option>
@@ -88,13 +110,14 @@ export default function Browse() {
             </Select>
           </div>
           <div className="w-24">
-            <Select placeholder="Price" size="sm">
+            <Select onChange={handlePrice} placeholder="Price" size="sm">
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
               <option value="option3">Option 3</option>
             </Select>
           </div>
         </HStack>
+        <BrowseItemDisplay />
       </div>
     </div>
   );
