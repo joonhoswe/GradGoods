@@ -1,10 +1,23 @@
 import { React, useState, useEffect } from  'react';
 import Navbar from '../components/navbar';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+import upload from '../assets/upload.png';
+import AWS from 'aws-sdk';
 
 import axios from 'axios';
 
 export default function postListing() {
+
+    // initialize AWS
+    useEffect(() => {
+        AWS.config.update({
+            region: 'us-east-2',
+            credentials: new AWS.Credentials(
+                import.meta.env.VITE_AWS_ACCESS_KEY,
+                import.meta.env.VITE_AWS_SECRET_KEY
+            )
+        });
+    }, []);
 
     const [listing, setListing] = useState([]);
 
@@ -17,6 +30,48 @@ export default function postListing() {
 
     const [imageObjects, setImageObjects] = useState([]);
     const [imageURLs, setImageURLs] = useState([]);
+
+    const [fileNames, setFileNames] = useState([]);
+
+    let images = [];
+
+    // append images to the imageObjects array
+    const handleFileChange = (event) => {
+        const newFiles = Array.from(event.target.files);
+        setImageObjects(prevFiles => [...prevFiles, ...newFiles]);
+        setFileNames(prevNames => [...prevNames, ...newFiles.map(file => file.name)]);
+        console.log('Files:', imageObjects);
+    };
+
+    const handleFileDelete = (index) => {
+        setImageObjects(imageObjects.filter((_, i) => i !== index));
+        setFileNames(fileNames.filter((_, i) => i !== index));
+    };
+
+     // upload images to AWS S3 bucket and return URLs to be stored in PostgreSQL
+     const handleAWS = async () => {
+        const s3 = new AWS.S3();
+        let uploadedImages = [];
+
+        for (const image of imageObjects) {
+            const params = {
+                Bucket: "gradgoodsimages",
+                Key: image.name,
+                Body: image,
+                ContentType: image.type,
+            };
+
+            try {
+                const data = await s3.upload(params).promise();
+                uploadedImages.push(data.Location);
+                console.log('File uploaded successfully:', data.Location);
+            } catch (err) {
+                console.error('Error uploading file:', err);
+            }
+        }
+
+        // return uploadedImages; uncomment once handleSubmit is made
+    };
 
     return (
     <>
@@ -38,7 +93,7 @@ export default function postListing() {
                             onChange={handleFileChange}
                             />
                             <div className="flex flex-col items-center justify-center">
-                                <img src={upload.src} alt='upload' className='h-24 w-24'/>
+                                <img src={upload} alt='upload' className='h-24 w-24'/>
                                 <p className="mt-2 text-gray-500"> Drag & Drop your images here, or </p>
                                 <button className="mt-2 text-blue-500 underline"> Choose File </button>
                             </div>
@@ -55,6 +110,11 @@ export default function postListing() {
                                 </div>
                             ))}
                         </div>
+
+                        <button onClick={handleAWS} className="text-red-500 text-sm hover:text-gray-400 transition ease-in-out duration-300" title='Remove Image'> 
+                            Upload
+                        </button>
+
                     </div>
                 </div>
                 {/* right side of page */}

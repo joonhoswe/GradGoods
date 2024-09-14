@@ -15,9 +15,11 @@
     "@clerk/clerk-react": "^5.8.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "aws-sdk": "^2.1691.0",
     "axios": "^1.7.7",
     "framer-motion": "^11.5.4",
     "react": "^18.3.1",
+    "react-aws-s3": "^1.5.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"
   },
