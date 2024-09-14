@@ -31,6 +31,7 @@ function App() {
     
     <div>
       <Routes>
+        <Route path="/" />
         <Route path="/buy" element={<Buy />} />
       </Routes>
 
@@ -47,6 +48,11 @@ function App() {
               onChange={handleInputChange}
               value={school}
               placeholder="Search for your school"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === 'Return') {
+                  handleSearch();
+                }
+              }}
             />
             <InputRightAddon onClick={handleSearch}>
               <SearchIcon color="gray.600" />
