@@ -11,7 +11,7 @@ class Listing(models.Model):
     school = models.CharField(max_length=80, default='School')
     description = models.CharField(max_length=1000, default='Description')
     price = models.PositiveIntegerField(max_length=5, default ='0')
-    images = ArrayField(models.CharField(max_length=500, blank=True), blank=True, default = list)
+    imageURLs = ArrayField(models.CharField(max_length=500, blank=True), blank=True, default = list)
     
     def __str__(self):
         return self.address
