@@ -3,7 +3,6 @@ import Navbar from '../components/navbar';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 
 import axios from 'axios';
-// import AWS from 'aws-sdk';
 
 export default function postListing() {
 
