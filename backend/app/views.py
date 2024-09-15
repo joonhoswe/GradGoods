@@ -26,7 +26,7 @@ from .serializers import ListingSerializer
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Update or post a listing
-@api_view(['PATCH', 'PUT'])
+@api_view(['PATCH', 'POST'])
 def makeListing(request, id):
     # Retrieve the listing object
     listing = get_object_or_404(Listing, id=id)
