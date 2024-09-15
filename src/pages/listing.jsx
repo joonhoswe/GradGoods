@@ -60,6 +60,10 @@ export default function Listing() {
         <div className="w-[50%]">
           <h1>{curr.itemName}</h1>
           <p>{curr.owner}</p>
+          {curr.itemCategory === "Clothing" || curr.itemCategory === "Shoes" ? (
+            <div>Size: </div>
+          ) : null}
+          <p>Category: {curr.itemCategory}</p>
         </div>
       </div>
     </div>
