@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import Navbar from '../components/navbar';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+import { useUser } from "@clerk/clerk-react";
 import upload from '../assets/upload.png';
 import axios from 'axios';
 import AWS from 'aws-sdk';
@@ -23,7 +24,9 @@ export default function postListing() {
 
     const [submitClicked, setSubmitClicked] = useState(false);
 
-    const [owner, setOwner] = useState('');
+    const { isSignedIn, user, isLoaded } = useUser();
+    const owner = user.username
+    
     const [itemName, setItemName] = useState('');
     const [itemCategory, setItemCategory] = useState('');
     const [school, setSchool] = useState('');
@@ -109,7 +112,6 @@ export default function postListing() {
 
     // clear form after submission
     const clearForm = () => {
-        setOwner('');
         setItemName('');
         setItemCategory('');
         setSchool('');
@@ -161,18 +163,6 @@ export default function postListing() {
 
                 {/* right side of page */}
                 <div className='flex flex-col h-full w-1/2 space-y-4'>
-                    {/* Owner */}
-                    <div className="flex flex-col">
-                        <label className="text-lg font-medium" htmlFor="owner">Owner</label>
-                        <input 
-                            id="owner" 
-                            type="text" 
-                            value={owner} 
-                            onChange={(e) => setOwner(e.target.value)} 
-                            placeholder="Enter owner name" 
-                            className="p-2 border rounded-lg"
-                        />
-                    </div>
 
                     {/* Item Name */}
                     <div className="flex flex-col">
