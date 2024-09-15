@@ -173,7 +173,7 @@ export default function Profile() {
                   active ? "text-gray-500" : "text-black"
                 }`}
               >
-                Complete/Inactive
+                Complete
               </p>
             </div>
           </div>
