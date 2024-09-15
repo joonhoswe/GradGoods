@@ -25,7 +25,7 @@ const ItemCard = ({ item }) => {
     >
       <CardBody>
         <Image
-          src={item.imageUrl}
+          src={item.imageURLs[0]}
           alt={item.title}
           borderRadius="lg"
           objectFit="cover"
@@ -35,10 +35,10 @@ const ItemCard = ({ item }) => {
         />
         <Stack mt="2" spacing="1">
           <Text color="#979797" fontSize="12px" textAlign="left">
-            {item.category}
+            {item.itemCategory}
           </Text>
           <Heading size="md" textAlign="left" isTruncated>
-            {item.title}
+            {item.itemName}
           </Heading>
           <Text color="black" fontSize="1xl" textAlign="left" fontWeight="500">
             ${item.price}
