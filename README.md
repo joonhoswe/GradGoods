@@ -21,15 +21,15 @@ External APIs/Libraries: Clerk Auth, OpenAI (GPT 4o-mini model for calculating w
 
 ## Running the Website:
 ### Frontend:
-npm install <br/>
-npm run dev  <br/>
+`npm install` <br/>
+`npm run dev`  <br/>
 
 ### Backend:
-cd backend  <br/>
-pip install -r requirements.txt  <br/>
-python manage.py makemigrations  <br/>
-python manage.py migrate  <br/>
-python manage.py runserver  <br/>
+`cd backend ` <br/>
+`pip install -r requirements.txt ` <br/>
+`python manage.py makemigrations`  <br/>
+`python manage.py migrate`  <br/>
+`python manage.py runserver ` <br/>
 
 You're all set!
 
