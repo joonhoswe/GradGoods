@@ -63,7 +63,7 @@ export default function Browse() {
           return true;
         });
         setListings(filteredData);
-        setFilteredListings(filteredData.filter(listing => listing.itemName?.toLowerCase().includes(query.toLowerCase())));
+        setFilteredListings(filteredData.filter(listing => listing.itemName?.toLowerCase().includes(search.toLowerCase())));
       }
     } catch (error) {
       console.error('Error fetching Data:', error);
