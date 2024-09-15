@@ -51,6 +51,10 @@ export default function Listing() {
     }
   };
 
+  const handleUpdate = async (item) => {
+    //todo: fill this in
+  };
+
   useEffect(() => {
     if (isSignedIn && user) {
       const fetchData = async () => {
@@ -141,7 +145,19 @@ export default function Listing() {
           />
         </div>
         <div className="w-[50%] ml-10">
-          <Heading size="2xl">{curr.itemName}</Heading>
+          <div className="flex flex-row justify-between">
+            <Heading size="2xl">{curr.itemName}</Heading>
+            {isMyListing ? (
+              <div>
+                <Button
+                  borderRadius="full"
+                  onClick={() => handleUpdate(curr.itemName)}
+                >
+                  Edit
+                </Button>
+              </div>
+            ) : null}
+          </div>
           <p className="mb-4 text-2xl font-medium">{curr.owner}</p>
           {curr.itemCategory === "Clothing" || curr.itemCategory === "Shoes" ? (
             <div className="mb-4 text-2xl font-normal">Size: </div>
