@@ -134,7 +134,7 @@ export default function Listing() {
         <Navbar />
       </div>
       <div className="mt-20 mx-[5vw] flex flex-row justify-between">
-        {curr ? (  // Check if `curr` exists before trying to access its properties
+        {curr ? ( // Check if `curr` exists before trying to access its properties
           <>
             <div className="w-[50%] flex flex-row justify-center items-center">
               <Icon
@@ -155,11 +155,15 @@ export default function Listing() {
               <Icon
                 cursor={currImage < imagesArr.length - 1 ? "pointer" : null}
                 boxSize={10}
-                color={currImage < imagesArr.length - 1 ? "gray.700" : "gray.300"}
+                color={
+                  currImage < imagesArr.length - 1 ? "gray.700" : "gray.300"
+                }
                 ml="4"
                 as={ChevronRightIcon}
                 onClick={
-                  currImage < imagesArr.length - 1 > 0 ? increaseImageIndex : null
+                  currImage < imagesArr.length - 1 > 0
+                    ? increaseImageIndex
+                    : null
                 }
               />
             </div>
@@ -170,7 +174,7 @@ export default function Listing() {
                   <div>
                     <Button
                       borderRadius="full"
-                      onClick={() => handleUpdate(curr.itemName)}
+                      onClick={() => handleUpdate(curr)}
                     >
                       Edit
                     </Button>
@@ -178,7 +182,8 @@ export default function Listing() {
                 ) : null}
               </div>
               <p className="mb-4 text-2xl font-medium">{curr.owner}</p>
-              {curr.itemCategory === "Clothing" || curr.itemCategory === "Shoes" ? (
+              {curr.itemCategory === "Clothing" ||
+              curr.itemCategory === "Shoes" ? (
                 <div className="mb-4 text-2xl font-normal">Size: </div>
               ) : null}
               <p className="mb-4 text-xl font-normal">
@@ -187,7 +192,7 @@ export default function Listing() {
               <p className="mb-4 text-2xl font-bold">${curr.price}</p>
               {isMyListing ? (
                 <Button
-                  onClick={() => handleDelete(curr.itemName)}
+                  onClick={() => handleDelete(curr)}
                   size="lg"
                   colorScheme="red"
                 >
@@ -208,5 +213,4 @@ export default function Listing() {
       </div>
     </div>
   );
-  
 }
