@@ -61,7 +61,7 @@ export default function Browse() {
       const response = await axios.get("http://127.0.0.1:8000/api/get/");
       const database = response.data;
       console.log(database);
-      if (user) {
+      // if (user) {
         const filteredData = database.filter((listing) => {
           if (listing.school !== school) {
             return false;
@@ -98,7 +98,7 @@ export default function Browse() {
             listing.itemName?.toLowerCase().includes(search.toLowerCase())
           )
         );
-      }
+      // }
     } catch (error) {
       console.error("Error fetching Data:", error);
       if (error.response) {
@@ -114,10 +114,10 @@ export default function Browse() {
   };
 
   useEffect(() => {
-    if (isSignedIn && user) {
-      console.log("Inside");
-      fetchData();
-    }
+    // if (isSignedIn && user) {
+    //   fetchData();
+    // }
+    fetchData();
   }, [isSignedIn, user, selectedTag, sizeFilter, priceFilter]);
 
   const onInputChange = (event) => {
