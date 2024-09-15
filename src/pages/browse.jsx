@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   Input,
@@ -13,19 +13,49 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 import Navbar from "../components/navbar";
 import BrowseItemDisplay from "../components/BrowseItemDisplay";
+import axios from "axios";
+import { useUser } from "@clerk/clerk-react";
 
 export default function Browse() {
   const location = useLocation();
-  const { school } = location.state || {}; // Access the `school` from state
+  const { school } = location.state || {};
   const [search, setSearch] = useState("");
   const tagOptions = ["Clothing", "Electronics", "Shoes", "Textbooks"];
   const [filters, setFilters] = useState([]);
+  const { isSignedIn, user, isLoaded } = useUser();
+  const [listings, setListings] = useState([]);
   const [sizeFilter, setSizeFilter] = useState("");
   const [priceFilter, setPriceFilter] = useState("");
 
   if (!school) {
     console.error("error: school not found");
   }
+
+  useEffect(() => {
+    if (isSignedIn && user) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get("http://127.0.0.1:8000/api/get/");
+          const data = response.data;
+          setListings(data);
+          console.log(data);
+        } catch (error) {
+          console.error("Error fetching Data:", error);
+          if (error.response) {
+            console.error("Response data:", error.response.data);
+            console.error("Response status:", error.response.status);
+            console.error("Response headers:", error.response.headers);
+          } else if (error.request) {
+            console.error("Request data:", error.request);
+          } else {
+            console.error("Error message:", error.message);
+          }
+        }
+      };
+
+      fetchData();
+    }
+  }, [isSignedIn, user]);
 
   const onInputChange = (event) => {
     setSearch(event.target.value);
@@ -118,7 +148,7 @@ export default function Browse() {
           </div>
         </HStack>
         <div className="mt-8">
-          <BrowseItemDisplay />
+          <BrowseItemDisplay items={listings} />
         </div>
       </div>
     </div>
