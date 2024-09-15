@@ -82,23 +82,31 @@ export default function Profile() {
         >
           My Account
         </Heading>
-        <div className="flex flex-row">
-          <img
-            src={imageSrc}
-            alt="pfp"
-            className="mr-6"
-            style={{
-              width: "150px",
-              height: "150px",
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <div className="flex flex-col">
-            <Heading>{user.fullName}</Heading>
-            <div>sell</div>
+        <div className="flex flex-row justify-between">
+          <div className="flex flex-row">
+            <img
+              src={imageSrc}
+              alt="pfp"
+              className="mr-6"
+              style={{
+                width: "150px",
+                height: "150px",
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <div className="flex items-center">
+              <Heading>{user.fullName}</Heading>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-end">
+              <h1 className="text-4xl font-bold"> Earnings: $290 </h1>
+              <h1 className="text-4xl font-bold text-green-500"> 1,293lbs of waste saved </h1>
           </div>
         </div>
+        
+        
         <Divider />
         
         <div className="flex flex-row w-full h-full py-16">
