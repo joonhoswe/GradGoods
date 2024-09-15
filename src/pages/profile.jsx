@@ -110,7 +110,6 @@ export default function Profile() {
         <Heading
           className="text-left mb-3"
           as="h2"
-          size="lg"
           p={0}
           noOfLines={1}
         >
@@ -152,10 +151,10 @@ export default function Profile() {
         <div className="flex flex-row w-full h-full py-8">
           <div className="flex flex-row w-1/4 h-full">
             <div className="flex flex-col space-y-2">
-              <Heading mb={2}>My Listings</Heading>
+              <Heading mb={2} size="lg">My Listings</Heading>
               <p
                 onClick={() => setActive(true)}
-                className={`font-bold hover:cursor-pointer ${
+                className={`text-lg font-bold hover:cursor-pointer transition ease-in-out duration-300 hover:text-green-500 ${
                   active ? "text-black" : "text-gray-500"
                 }`}
               >
@@ -163,7 +162,7 @@ export default function Profile() {
               </p>
               <p
                 onClick={() => setActive(false)}
-                className={`font-bold hover:cursor-pointer ${
+                className={`text-lg font-bold hover:cursor-pointer transition ease-in-out duration-300 hover:text-green-500 ${
                   active ? "text-gray-500" : "text-black"
                 }`}
               >
