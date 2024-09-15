@@ -170,7 +170,7 @@ function Home({ onSearch, onInputChange, school, suggestions, handleSelectSugges
               </Box>
             )}
             <InputRightAddon onClick={onSearch}>
-              <SearchIcon color="gray.600" />
+              <SearchIcon color="gray.600" className="cursor-pointer"/>
             </InputRightAddon>
           </InputGroup>
         </div>
