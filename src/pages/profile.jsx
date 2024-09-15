@@ -60,7 +60,7 @@ export default function Profile() {
   }, [isSignedIn, isLoaded, user]);
 
   const handleCardClick = (id) => {
-    if (isMarkingComplete) {
+    if (!isMarkingComplete) {
       markComplete(id);
     } else {
       navigate(`/listing/${id}`);
@@ -81,7 +81,7 @@ export default function Profile() {
       setUserActiveListings(updatedListings.filter(listing => listing.active));
       setUserInactiveListings(updatedListings.filter(listing => !listing.active));
       
-      setIsMarkingComplete(false);
+      setIsMarkingComplete(true);
     } catch (error) {
       console.error("Error marking listing as complete:", error);
     }
@@ -130,7 +130,7 @@ export default function Profile() {
         <div className="flex justify-end mb-2">
           <button
             className="rounded-md w-36 h-10 bg-green-500 text-white font-bold"
-            onClick={() => setIsMarkingComplete(true)}
+            onClick={() => setIsMarkingComplete(false)}
           >
             Mark Complete
           </button>
