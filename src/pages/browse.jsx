@@ -153,7 +153,7 @@ export default function Browse() {
                 }
               }}
             />
-            <InputRightAddon>
+            <InputRightAddon  _hover={{ bg: 'gray.50', cursor: 'pointer' }}>
               <SearchIcon color="gray.600" />
             </InputRightAddon>
           </InputGroup>

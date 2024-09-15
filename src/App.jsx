@@ -174,7 +174,7 @@ function Home({ onSearch, onInputChange, school, suggestions, handleSelectSugges
                 </List>
               </Box>
             )}
-            <InputRightAddon onClick={onSearch}>
+            <InputRightAddon onClick={onSearch} _hover={{ bg: 'gray.50', cursor: 'pointer' }}>
               <SearchIcon color="gray.600" />
             </InputRightAddon>
           </InputGroup>
