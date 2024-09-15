@@ -201,33 +201,19 @@ export default function Listing() {
                     py={6}
                   />
                 ) : (
-                  <Heading size="2xl">{curr.itemName}</Heading>
+                  <div className="flex flex-row justify-between">
+                    <Heading size="2xl">{curr.itemName}</Heading>
+                    {isMyListing ? (
+                      <Button
+                        onClick={() => handleDelete(curr)}
+                        size="lg"
+                        colorScheme="red"
+                      >
+                        Delete item
+                      </Button>
+                    ) : null}
+                  </div>
                 )}
-                <div>
-                  {isMyListing && (
-                    <div>
-                      {editMode ? (
-                        <Button
-                          ml="20px"
-                          borderRadius="full"
-                          onClick={() => {
-                            // Your save logic here
-                            setEditMode(false); // Optionally disable edit mode on save
-                          }}
-                        >
-                          Save
-                        </Button>
-                      ) : (
-                        <Button
-                          borderRadius="full"
-                          onClick={() => setEditMode(true)}
-                        >
-                          Edit
-                        </Button>
-                      )}
-                    </div>
-                  )}
-                </div>
               </div>
               <p className="my-4 text-2xl font-medium">Sold by: {curr.owner}</p>
               {curr.itemCategory === "Clothing" ||
@@ -264,15 +250,7 @@ export default function Listing() {
               ) : (
                 <p className="mb-4 text-2xl font-bold">${curr.price}</p>
               )}
-              {isMyListing ? (
-                <Button
-                  onClick={() => handleDelete(curr)}
-                  size="lg"
-                  colorScheme="red"
-                >
-                  Delete
-                </Button>
-              ) : (
+              {isMyListing ? null : (
                 <Button size="lg" colorScheme="green">
                   Buy now
                 </Button>
