@@ -66,6 +66,9 @@ export default function Browse() {
           if (listing.school !== school) {
             return false;
           }
+          if (listing.active === false) {
+            return false;
+          }
           if (
             selectedTag !== "View All" &&
             !listing.itemCategory?.includes(selectedTag)
