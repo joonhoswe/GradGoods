@@ -33,6 +33,8 @@ export default function postListing() {
     if (user) {
         const owner = user.username
         console.log(user);
+        console.log(user.primaryEmailAddress.emailAddress);
+        console.log(isEmailValid);
     }
     
     const [itemName, setItemName] = useState('');
