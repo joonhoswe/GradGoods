@@ -111,7 +111,7 @@ export default function Profile() {
             </div>
             <div className="flex flex-row w-3/4 h-full">
               <div className='flex gap-6 items-center flex-wrap'>
-                {userListings.map((listing, index) => {
+                {active ? userListings.map((listing, index) => {
                 const imagesArray = listing.imageURLs ? listing.imageURLs.split(',') : []; // Split the 'images' string into an array
                 return ( 
                   <div
@@ -132,6 +132,28 @@ export default function Profile() {
                     </div>
                   </div>
                 );
+              }) : 
+              userInactiveListings.map((listing, index) => {
+                const imagesArray = listing.imageURLs ? listing.imageURLs.split(',') : []; // Split the 'images' string into an array
+                return ( 
+                  <div
+                    key={index}
+                    className='relative flex flex-col h-56 w-56 hover:cursor-pointer border border-gray-200'
+                  >
+                    <img
+                      src={!imagesArray[0] ? placeholder : imagesArray[0]}
+                      alt='Listing Image'
+                      className='h-1/2 w-full'
+                    />
+                    <div className='flex flex-col space-y-1 justify-start text-start px-4'>
+                      <div className='flex flex-col space-y-1'>
+                        <p className='text-xs'> {listing.itemCategory} </p>
+                        <h1 className='text-lg font-bold'> {listing.itemName} </h1>
+                        <p className='text-md'> ${listing.price} </p>
+                      </div>
+                    </div>
+                  </div>
+                )
               })}
               </div>
             </div>
