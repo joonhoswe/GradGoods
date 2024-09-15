@@ -28,7 +28,7 @@ export default function postListing() {
 
     const eduEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+\.edu$/;
 
-    const isEmailValid = user ? eduEmailRegex.test(user.primaryEmailAddress.emailAddress) : true;
+    const isEmailValid = user ? user.primaryEmailAddress.emailAddress.substring(user.primaryEmailAddress.emailAddress.length - 4) == '.edu' : true;
     // abc@mit.edu
     if (user) {
         const owner = user.username
