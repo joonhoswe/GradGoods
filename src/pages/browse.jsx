@@ -21,7 +21,13 @@ export default function Browse() {
   const location = useLocation();
   const { school } = location.state || {};
   const [search, setSearch] = useState("");
-  const tagOptions = ["View All", "Clothing", "Electronics", "Shoes", "Textbooks"];
+  const tagOptions = [
+    "View All",
+    "Clothing",
+    "Electronics",
+    "Shoes",
+    "Textbooks",
+  ];
   const [selectedTag, setSelectedTag] = useState("View All");
   const { isSignedIn, user, isLoaded } = useUser();
   const [listings, setListings] = useState([]);
@@ -29,8 +35,12 @@ export default function Browse() {
   const [sizeFilter, setSizeFilter] = useState("");
   const [priceFilter, setPriceFilter] = useState("");
   const updateListings = (query) => {
-    setFilteredListings(listings.filter(listing => listing.itemName?.toLowerCase().includes(query.toLowerCase())));
-  }
+    setFilteredListings(
+      listings.filter((listing) =>
+        listing.itemName?.toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  };
   useEffect(() => {
     updateListings(search);
   }, [search]);
@@ -40,15 +50,18 @@ export default function Browse() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/get/');
+      const response = await axios.get("http://127.0.0.1:8000/api/get/");
       const database = response.data;
       console.log(database);
       if (user) {
-        const filteredData = database.filter(listing => {
+        const filteredData = database.filter((listing) => {
           if (listing.school !== school) {
             return false;
           }
-          if (selectedTag !== "View All" && !listing.category?.includes(selectedTag)) {
+          if (
+            selectedTag !== "View All" &&
+            !listing.itemCategory?.includes(selectedTag)
+          ) {
             return false;
           }
           if (sizeFilter && !listing.size?.includes(sizeFilter)) {
@@ -56,25 +69,31 @@ export default function Browse() {
           }
           if (priceFilter && listing.price) {
             const price = listing.price;
-            if (priceFilter === "0-20" && (price < 0 || price > 20)) return false;
-            if (priceFilter === "20-50" && (price < 20 || price > 50)) return false;
+            if (priceFilter === "0-20" && (price < 0 || price > 20))
+              return false;
+            if (priceFilter === "20-50" && (price < 20 || price > 50))
+              return false;
             if (priceFilter === ">50" && price <= 50) return false;
           }
           return true;
         });
         setListings(filteredData);
-        setFilteredListings(filteredData.filter(listing => listing.itemName?.toLowerCase().includes(search.toLowerCase())));
+        setFilteredListings(
+          filteredData.filter((listing) =>
+            listing.itemName?.toLowerCase().includes(search.toLowerCase())
+          )
+        );
       }
     } catch (error) {
-      console.error('Error fetching Data:', error);
+      console.error("Error fetching Data:", error);
       if (error.response) {
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
-        console.error('Response headers:', error.response.headers);
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
       } else if (error.request) {
-        console.error('Request data:', error.request);
+        console.error("Request data:", error.request);
       } else {
-        console.error('Error message:', error.message);
+        console.error("Error message:", error.message);
       }
     }
   };
@@ -107,7 +126,7 @@ export default function Browse() {
   };
 
   const onSearch = () => {
-    fetchData(); 
+    fetchData();
   };
 
   return (
@@ -163,7 +182,12 @@ export default function Browse() {
           <HStack spacing={4}>
             <>Filter by:</>
             <Box width="auto">
-              <Select onChange={handlePrice} placeholder="Price" size="sm" width="150px">
+              <Select
+                onChange={handlePrice}
+                placeholder="Price"
+                size="sm"
+                width="150px"
+              >
                 <option value="0-20">Under $20</option>
                 <option value="20-50">$20-$50</option>
                 <option value=">50">Above $50</option>
@@ -171,17 +195,38 @@ export default function Browse() {
             </Box>
             {(selectedTag === "Clothing" || selectedTag === "Shoes") && (
               <Box width="auto">
-                <Select onChange={handleSize} placeholder="Size" size="sm" width={selectedTag === "Shoes" ? "230px" : "100px"}>
+                <Select
+                  onChange={handleSize}
+                  placeholder="Size"
+                  size="sm"
+                  width={selectedTag === "Shoes" ? "230px" : "100px"}
+                >
                   {selectedTag === "Shoes" && (
                     <>
-                      <option value="3 (Women's) / 5 (Men's)">3 (Women's) / 5 (Men's)</option>
-                      <option value="4 (Women's) / 6 (Men's)">4 (Women's) / 6 (Men's)</option>
-                      <option value="5 (Women's) / 7 (Men's)">5 (Women's) / 7 (Men's)</option>
-                      <option value="6 (Women's) / 8 (Men's)">6 (Women's) / 8 (Men's)</option>
-                      <option value="7 (Women's) / 9 (Men's)">7 (Women's) / 9 (Men's)</option>
-                      <option value="8 (Women's) / 10 (Men's)">8 (Women's) / 10 (Men's)</option>
-                      <option value="9 (Women's) / 11 (Men's)">9 (Women's) / 11 (Men's)</option>
-                      <option value="10 (Women's) / 12 (Men's)">10 (Women's) / 12 (Men's)</option>
+                      <option value="3 (Women's) / 5 (Men's)">
+                        3 (Women's) / 5 (Men's)
+                      </option>
+                      <option value="4 (Women's) / 6 (Men's)">
+                        4 (Women's) / 6 (Men's)
+                      </option>
+                      <option value="5 (Women's) / 7 (Men's)">
+                        5 (Women's) / 7 (Men's)
+                      </option>
+                      <option value="6 (Women's) / 8 (Men's)">
+                        6 (Women's) / 8 (Men's)
+                      </option>
+                      <option value="7 (Women's) / 9 (Men's)">
+                        7 (Women's) / 9 (Men's)
+                      </option>
+                      <option value="8 (Women's) / 10 (Men's)">
+                        8 (Women's) / 10 (Men's)
+                      </option>
+                      <option value="9 (Women's) / 11 (Men's)">
+                        9 (Women's) / 11 (Men's)
+                      </option>
+                      <option value="10 (Women's) / 12 (Men's)">
+                        10 (Women's) / 12 (Men's)
+                      </option>
                     </>
                   )}
                   {selectedTag === "Clothing" && (

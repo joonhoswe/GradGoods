@@ -5,15 +5,51 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useUser } from "@clerk/clerk-react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/navbar";
+import AWS from "aws-sdk";
+import { useNavigate } from "react-router-dom";
 
 export default function Listing() {
+  const navigate = useNavigate();
   const [listings, setListings] = useState([]);
-  const [currImage, setCurrImage] = useState(1);
+  const [currImage, setCurrImage] = useState(0);
   const [imagesArr, setImagesArr] = useState([]);
   const { isSignedIn, user, isLoaded } = useUser();
   const { id } = useParams();
   const [curr, setCurr] = useState(null);
   const [isMyListing, setIsMyListing] = useState(false);
+
+  AWS.config.update({
+    region: "us-east-2",
+    credentials: new AWS.Credentials(
+      import.meta.env.VITE_AWS_ACCESS_KEY,
+      import.meta.env.VITE_AWS_SECRET_KEY
+    ),
+  });
+
+  const s3 = new AWS.S3();
+
+  const handleDelete = async (item) => {
+    try {
+      // Delete the listing from the database
+      await axios.delete(`http://127.0.0.1:8000/api/delete/${item.id}`);
+
+      // Delete images from AWS S3
+      for (const imageUrl of imageUrls) {
+        const imageKey = imageUrl.split("/").pop();
+        if (imageKey.length !== 0) {
+          const information = {
+            Bucket: "gradgoodsimages",
+            Key: imageKey,
+          };
+          await s3.deleteObject(information).promise();
+        }
+      }
+    } catch (error) {
+      console.error("Error deleting listing:", error);
+    } finally {
+      navigate("/browse");
+    }
+  };
 
   useEffect(() => {
     if (isSignedIn && user) {
@@ -55,7 +91,7 @@ export default function Listing() {
     if (curr) {
       setImagesArr(curr.imageURLs.split(","));
       console.log(curr.imageURLs.split(","));
-      setIsMyListing(user.username === curr.username);
+      setIsMyListing(user.username === curr.owner);
     }
   }, [curr]);
 
@@ -114,7 +150,15 @@ export default function Listing() {
             Category: {curr.itemCategory}
           </p>
           <p className="mb-4 text-2xl font-bold">${curr.price}</p>
-          {isMyListing ? null : (
+          {isMyListing ? (
+            <Button
+              onClick={() => handleDelete(curr.itemName)}
+              size="lg"
+              colorScheme="red"
+            >
+              Delete
+            </Button>
+          ) : (
             <Button size="lg" colorScheme="green">
               Buy now
             </Button>
