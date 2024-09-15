@@ -51,6 +51,9 @@ export default function Profile() {
             (listing) => listing.active === false
           );
           setUserInactiveListings(inactiveListings);
+
+          // Calculate pounds after fetching data
+          calculateTotalPounds(inactiveListings);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -67,15 +70,24 @@ export default function Profile() {
             },
           ],
         });
-        console.log(completion.choices[0].message.content);
+        return parseInt(completion.choices[0].message.content, 10) || 0;
+      };
+
+      // Async function to calculate pounds for all inactive listings
+      const calculateTotalPounds = async (inactiveListings) => {
+        let totalPounds = 0;
+
+        // Use for...of loop to await the asynchronous getPounds calls
+        for (const listing of inactiveListings) {
+          const poundsForItem = await getPounds(listing.itemName);
+          totalPounds += poundsForItem;
+        }
+
+        // After calculating all pounds, set the state
+        setPounds(totalPounds);
       };
 
       fetchData();
-      userInactiveListings.forEach((listing) => {
-        const p = getPounds(listing.itemName);
-        setPounds(pounds + p);
-      });
-      calculateEarnings();
     }
   }, [isSignedIn, isLoaded, user, isMarkingComplete]);
 
@@ -142,7 +154,7 @@ export default function Profile() {
 
           <div className="flex flex-col items-end">
             <h1 className="text-3xl font-bold"> 💰 Earnings: ${calculateEarnings()}</h1>
-            <h1 className="text-3xl font-bold text-green-500"> 🍃 {pounds}lbs of waste saved</h1>
+            <h1 className="text-3xl font-bold text-green-500"> 🍃 {pounds} lbs of waste saved</h1>
           </div>
         </div>
 
@@ -201,5 +213,4 @@ export default function Profile() {
       </div>
     </div>
   );
-  
 }
