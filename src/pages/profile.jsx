@@ -20,7 +20,7 @@ export default function Profile() {
   const [userListings, setUserListings] = useState([]);
   const [userActiveListings, setUserActiveListings] = useState([]);
   const [userInactiveListings, setUserInactiveListings] = useState([]);
-  const [isMarkingComplete, setIsMarkingComplete] = useState(false);
+  const [isMarkingComplete, setIsMarkingComplete] = useState(true);
   const [active, setActive] = useState(true);
 
   const calculateEarnings = () => {
@@ -44,6 +44,7 @@ export default function Profile() {
           const activeListings = userJoinedListings.filter(
             (listing) => listing.active === true
           );
+          console.log(activeListings);
           setUserActiveListings(activeListings);
 
           const inactiveListings = userJoinedListings.filter(
@@ -56,8 +57,9 @@ export default function Profile() {
       };
 
       fetchData();
+      calculateEarnings();
     }
-  }, [isSignedIn, isLoaded, user]);
+  }, [isSignedIn, isLoaded, user, isMarkingComplete]);
 
   const handleCardClick = (id) => {
     if (!isMarkingComplete) {
@@ -69,8 +71,8 @@ export default function Profile() {
 
   const markComplete = async (id) => {
     try {
-      const response = await axios.patch(`http://127.0.0.1:8000/api/update/${id}/`, {
-        active: false, // The field to update
+      const response = await axios.patch(`http://127.0.0.1:8000/api/patch/${id}/`, {
+        active: false // The field to update
       });
       console.log("Listing marked complete:", response.data);
 
