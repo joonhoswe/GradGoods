@@ -27,7 +27,7 @@ export default function Navbar() {
       <nav className="flex justify-between items-center p-4 px-16 bg-white shadow-md w-full">
         <div className="flex items-center space-x-4">
           <Link to="/" className="flex text-2xl font-bold text-gray-800">
-            <img src="../../public/logo.png" alt="logo" style={{ width: '70px', height: '40px'}} />
+            <img src="../../public/logo.png" alt="logo" style={{ width: '50px', height: '30px'}} />
             GradGoods
           </Link>
         </div>
