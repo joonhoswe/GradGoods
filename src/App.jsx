@@ -4,6 +4,7 @@ import Browse from "./pages/browse";
 import "./App.css";
 import Navbar from "./components/navbar";
 import PostListing from "./pages/postListing";
+import Listing from "./pages/listing";
 import Profile from "./pages/profile.jsx";
 import { allSchools } from "./schoolData.js";
 import {
@@ -89,6 +90,7 @@ function App() {
       <Route path="/browse" element={<Browse />} />
       <Route path="/postListing" element={<PostListing />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/listing/:id" element={<Listing />} />
     </Routes>
   );
 }
