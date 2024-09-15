@@ -147,7 +147,7 @@ export default function postListing() {
                                 <div className="flex items-center justify-center h-8 w-8 bg-green-700 text-white rounded-full mr-4" style={{fontSize: '14px'}}>
                                     1
                                 </div>
-                                <label className="font-medium" style={{paddingLeft: '0px', paddingBottom: '1px', fontSize: '20px'}}>
+                                <label className="font-medium" style={{paddingLeft: '0px', paddingBottom: '1px', fontSize: '23px'}}>
                                     Image Upload
                                 </label>
                             </div>
@@ -185,7 +185,14 @@ export default function postListing() {
     
                     {/* right side of page */}
                     <div className='flex flex-col h-full w-1/2 space-y-4'>
-    
+                        <div className="flex items-center" style ={{paddingTop:'75px'}}>
+                                <div className="flex items-center justify-center h-8 w-8 bg-green-700 text-white rounded-full mr-4 font-bold" style={{fontSize: '14px'}}>
+                                    2
+                                </div>
+                                <label className="font-medium" style={{paddingLeft: '0px', paddingBottom: '1px', fontSize: '23px'}}>
+                                    Item Details
+                                </label>
+                            </div>
                         {/* Item Name */}
                         <div className="flex flex-col">
                             <label className="text-lg font-medium" htmlFor="itemName">Item Name</label>
@@ -262,7 +269,7 @@ export default function postListing() {
                         {/* Submit Button */}
                         <div className="flex justify-center">
                             <button 
-                                className={`bg-blue-500 text-white p-3 rounded-lg mt-4 ${!isEmailValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                                className={`bg-green-800 text-white p-3 rounded-lg mt-4 font-bold ${!isEmailValid ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                                 onClick={handleSubmit}
                                 disabled={!isEmailValid} // Disable the submit button if the email is not valid
                             >
