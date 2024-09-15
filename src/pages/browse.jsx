@@ -30,6 +30,13 @@ export default function Browse() {
   ];
   const [selectedTag, setSelectedTag] = useState("View All");
   const { isSignedIn, user, isLoaded } = useUser();
+
+  const isEmailValid = user
+  ? user.primaryEmailAddress.emailAddress.substring(
+      user.primaryEmailAddress.emailAddress.length - 4
+    ) == ".edu"
+  : true;
+
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
   const [sizeFilter, setSizeFilter] = useState("");
@@ -134,6 +141,13 @@ export default function Browse() {
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
       </div>
+
+      {!isEmailValid && (
+        <div className="flex items-center justify-center w-full bg-red-500 text-white p-4 font-bold">
+          You MUST have a valid .edu email address to purchase listings!
+        </div>
+      )}
+
       <div className="mt-24 mx-[5vw]">
         <Heading
           className="text-left mb-3"
