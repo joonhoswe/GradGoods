@@ -189,8 +189,8 @@ export default function PostListing() {
                         <div className="flex flex-col" style={{ paddingTop: "30px" }}>
                             <div className="flex items-center">
                                 <div
-                                    className="flex items-center justify-center h-8 w-8 bg-green-700 text-white rounded-full mr-4"
-                                    style={{ fontSize: "14px" }}
+                                    className="flex items-center justify-center h-8 w-8 bg-green-700 text-white rounded-full mr-4" 
+                                    style={{ fontSize: "14px"}}
                                 >
                                     1
                                 </div>
@@ -206,7 +206,7 @@ export default function PostListing() {
                                 </label>
                             </div>
                             <div
-                                className={`flex items-center justify-center h-72 w-full max-w-lg rounded-lg border-2 border-grey mt-3 relative ${
+                                className={`flex items-center justify-center h-72 max-w-lg rounded-lg border-2 border-grey mt-8 relative ${
                                     !isEmailValid ? "cursor-not-allowed" : "cursor-pointer"
                                 }`}
                                 style={{ width: "500px", paddingTop: "5px" }}
@@ -239,13 +239,14 @@ export default function PostListing() {
                             </div>
 
                             {/* Each image uploaded */}
-                            <div className="mt-4 w-full">
+                            <div className="mt-4 max-w-lg">
                                 {fileNames.map((name, index) => (
                                     <div
                                         key={index}
                                         className="w-full h-8 flex items-center justify-between rounded-lg bg-gray-200 p-2 mb-2"
                                     >
-                                        <p className="text-blue-500">{name}</p>
+                                        {/* <p className="text-blue-500">{name}</p> */}
+                                        <p className="text-blue-500 text-ellipsis overflow-hidden whitespace-nowrap" style = {{fontSize:20,maxWidth:500}}>{name}</p>
                                         <button
                                             onClick={() => handleFileDelete(index)}
                                             className={`text-red-500 text-sm hover:text-gray-400 transition ease-in-out duration-300 ${
@@ -264,9 +265,9 @@ export default function PostListing() {
 
                     {/* Right side of page */}
                     <div className="flex flex-col h-full w-1/2 space-y-4">
-                        <div className="flex items-center" style={{ paddingTop: "30px" }}>
+                        <div className="flex items-center" style={{ paddingTop: "35px" }}>
                             <div
-                                className="flex items-center justify-center h-8 w-8 bg-green-700 text-white rounded-full mr-4"
+                                className="flex items-center justify-center h-8 w-8 bg-green-700 text-white rounded-full mr-4 font-bold"
                                 style={{ fontSize: "14px" }}
                             >
                                 2
