@@ -41,10 +41,7 @@ function App() {
   };
   const getSchool = (query) => {
     for (const name of allSchools) {
-      console.log(name.toLowerCase());
-      console.log(query.toLowerCase())
       if (name.toLowerCase() == query.toLowerCase()) {
-        console.log(name)
         return name;
       }
     }
