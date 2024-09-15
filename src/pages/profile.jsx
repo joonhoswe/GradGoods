@@ -197,8 +197,8 @@ export default function Profile() {
               </p>
             </div>
           </div>
-          <div className="flex flex-row w-3/4 h-full">
-            <div className="flex gap-6 items-center flex-wrap">
+          <div className="flex flex-row w-3/4 h-auto">
+            <div className="h-full flex gap-6 items-center flex-wrap">
               {active
                 ? userActiveListings.map((listing, index) => (
                     <div
