@@ -10,7 +10,7 @@ The current solution for this idea? Outdated facebook groups filled with scammer
 
 This all changes today, with GradGoods.
 
-GradGoods solves this issue by providing a centralized platform for college students both moving in and out of dorms, to securely and quickly buy and sell dorm essentials. By saving money for incoming students, returning money back to upperclassmen moving out, and reducing waste, GoodGrads is THE solution for this crisis.
+GradGoods solves this issue by providing a centralized, secure, and intuitive platform for college students both moving in and out of dorms, to securely and quickly buy and sell dorm essentials. GradGoods enforces valid .edu emails only, by leveraging Clerk Authentication. GradGoods also leverages ChatGPT to accurately estimate how many pounds of waste each seller has reduced by selling their items. By saving money for incoming students, returning money back to upperclassmen moving out, and reducing waste, GoodGrads is THE solution for this crisis.
 
 
 ## Tech Stack
