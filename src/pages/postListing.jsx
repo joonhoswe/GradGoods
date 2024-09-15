@@ -127,7 +127,7 @@ export default function PostListing() {
       });
       setTimeout(() => {
         // Set the timeout
-        navigate("/browse"); // Redirect path
+        navigate("/profile"); // Redirect path
       }, 1000);
     }
   };

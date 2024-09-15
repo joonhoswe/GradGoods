@@ -161,10 +161,14 @@ export default function Profile() {
         {/* Button aligned to the right above the divider */}
         <div className="flex justify-end mb-2">
           <button
-            className="rounded-md w-36 h-10 bg-green-500 text-white font-bold"
-            onClick={() => setIsMarkingComplete(false)}
+            onClick={() => setIsMarkingComplete(!isMarkingComplete)}
+            className={`transition ease-in-out duration-500 rounded-md w-48 h-10 font-bold ${
+              isMarkingComplete
+                ? 'bg-green-500 text-white'
+                : 'border border-green-500 bg-white text-green-500'
+            }`}
           >
-            Mark Complete
+            {isMarkingComplete ? 'Mark as Completed' : 'Selection in Progress'}
           </button>
         </div>
         <Divider />
