@@ -25,6 +25,26 @@ def createListing(request):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Update or post a listing
+@api_view(['PATCH'])
+def updateListing(request, id):
+    # Retrieve the listing object
+    listing = get_object_or_404(Listing, id=id)
+    
+    # For PATCH, only partial updates are required
+    partial = request.method == 'PATCH'
+    
+    # Create a serializer instance with the new data and the existing instance
+    serializer = ListingSerializer(listing, data=request.data, partial=partial)
+    
+    # Validate the data
+    if serializer.is_valid():
+        serializer.save()  # Save the changes
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    # Return validation errors if data is invalid
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 # retrieve all listings
 @api_view(['GET'])
 def getListing(request):
@@ -36,6 +56,19 @@ def getListing(request):
         #return the serialized listings
         return Response(serializer.data)
 
+# @api_view(['PATCH'])
+# def joinListing(request):
+#     if request.method == 'PATCH':
+#         id = request.data.get('id')
+
+#         if not id:
+#             return Response({'error': 'ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+#         listing = get_object_or_404(Listing, id=id) 
+#         listing.save()
+
+#         return Response({'message': 'Successfully updated the listing'}, status=status.HTTP_200_OK)
+    
 # delete a listing
 @api_view(['DELETE'])
 def deleteListing(request, id):
