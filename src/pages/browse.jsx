@@ -267,7 +267,7 @@ export default function Browse() {
             )}
           </HStack>
           <div className="mt-8 mb-24">
-            <BrowseItemDisplay items={filteredListings} isEmailValid={isEmailValid}/>
+            <BrowseItemDisplay items={filteredListings} isEmailValid={isEmailValid} school={school}/>
           </div>
         </div>
       </div>

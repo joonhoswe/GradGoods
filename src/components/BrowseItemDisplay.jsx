@@ -2,7 +2,7 @@ import ItemCard from "./ItemCard";
 import { Wrap, WrapItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-export default function BrowseItemDisplay({ items, isEmailValid }) {
+export default function BrowseItemDisplay({ items, isEmailValid, school }) {
   const navigate = useNavigate();
   console.log(items);
   if (!items || items.length === 0) {
@@ -11,7 +11,7 @@ export default function BrowseItemDisplay({ items, isEmailValid }) {
 
   const handleCardClick = (id) => {
     if (isEmailValid) {
-      navigate(`/listing/${id}`);
+      navigate(`/listing/${id}`, { state: { school } });
     }
   };
 
