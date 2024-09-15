@@ -5,7 +5,6 @@ import { Heading, Divider } from "@chakra-ui/react";
 import axios from 'axios';
 import placeholder from '../assets/placeholder.jpeg';
 import ItemCard from "../components/ItemCard";
-import { use } from "framer-motion/client";
 
 export default function Profile() {
   const { isSignedIn, user, isLoaded } = useUser();
@@ -17,8 +16,10 @@ export default function Profile() {
 
   const [active, setActive] = useState(true);
 
-
-// for inactive listings, add up all the prices to calculate money earned
+  // for inactive listings, add up all the prices to calculate money earned
+  const calculateEarnings = () => {
+    return userInactiveListings.reduce((total, listing) => total + (listing.price || 0), 0);
+  };
 
   useEffect(() => {
     if (isSignedIn && user) {
@@ -29,17 +30,17 @@ export default function Profile() {
           if (user) {
             setListings(response.data);
             const userJoinedListings = database.filter(listing =>
-              listing.owner == (user.username)
+              listing.owner === user.username
             );
             setUserListings(userJoinedListings);
             
             const activeListings = userJoinedListings.filter(listing =>
-              listing.active == (true)
+              listing.active === true
             );
             setUserActiveListings(activeListings);
 
             const inactiveListings = userJoinedListings.filter(listing =>
-              listing.active == (false)
+              listing.active === false
             );
             setUserInactiveListings(inactiveListings);
           }
@@ -61,8 +62,7 @@ export default function Profile() {
     }
   }, [isSignedIn, user]); // Dependencies
 
-  useEffect(() => {
-  }, [active]);
+  useEffect(() => {}, [active]);
 
   if (!isSignedIn) {
     return <div>Not signed in</div>;
@@ -82,13 +82,7 @@ export default function Profile() {
         <Navbar />
       </div>
       <div className="mt-24 mx-[5vw]">
-        <Heading
-          className="text-left mb-3"
-          as="h2"
-          size="lg"
-          p={0}
-          noOfLines={1}
-        >
+        <Heading className="text-left mb-3" as="h2" size="lg" p={0} noOfLines={1}>
           My Account
         </Heading>
         <div className="flex flex-row justify-between">
@@ -110,39 +104,38 @@ export default function Profile() {
           </div>
 
           <div className="flex flex-col items-end">
-              <h1 className="text-3xl font-bold"> 💰 Earnings: $290 </h1>
-              <h1 className="text-3xl font-bold text-green-500"> 🍃 1,293lbs of waste saved </h1>
+            {/* Dynamically display total earnings */}
+            <h1 className="text-3xl font-bold"> 💰 Earnings: ${calculateEarnings()} </h1>
+            <h1 className="text-3xl font-bold text-green-500"> 🍃 1,293lbs of waste saved </h1>
           </div>
         </div>
-        
-        
+
         <Divider />
-        
+
         <div className="flex flex-row w-full h-full py-16">
-            <div className="flex flex-row w-1/4 h-full">
-              <div className="flex flex-col space-y-2">
-                <Heading>My Listings</Heading>
-                <p onClick={() => setActive(!active)} className={`font-bold hover:cursor-pointer ${active ? 'text-black' : 'text-gray-500'}`}> Active </p>
-                <p onClick={() => setActive(!active)} className={`font-bold hover:cursor-pointer ${active ? 'text-gray-500' : 'text-black'}`}> Inactive </p>
-              </div>
+          <div className="flex flex-row w-1/4 h-full">
+            <div className="flex flex-col space-y-2">
+              <Heading>My Listings</Heading>
+              <p onClick={() => setActive(true)} className={`font-bold hover:cursor-pointer ${active ? 'text-black' : 'text-gray-500'}`}>
+                Active
+              </p>
+              <p onClick={() => setActive(false)} className={`font-bold hover:cursor-pointer ${active ? 'text-gray-500' : 'text-black'}`}>
+                Inactive
+              </p>
             </div>
-            <div className="flex flex-row w-3/4 h-full">
-              <div className='flex gap-6 items-center flex-wrap'>
-                {active ? userActiveListings.map((listing, index) => {
-                return ( 
-                  <ItemCard item={listing} key={index} />
-                )
-                
-              }) : 
-              userInactiveListings.map((listing, index) => {
-                return ( 
-                  <ItemCard item={listing} key={index} />
-                )
-              })}
-              </div>
+          </div>
+          <div className="flex flex-row w-3/4 h-full">
+            <div className="flex gap-6 items-center flex-wrap">
+              {active
+                ? userActiveListings.map((listing, index) => (
+                    <ItemCard item={listing} key={index} />
+                  ))
+                : userInactiveListings.map((listing, index) => (
+                    <ItemCard item={listing} key={index} />
+                  ))}
             </div>
+          </div>
         </div>
-        
       </div>
     </div>
   );
