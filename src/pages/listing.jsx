@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Heading,
@@ -7,7 +7,14 @@ import {
   Icon,
   Input,
   Textarea,
-  Select,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useUser } from "@clerk/clerk-react";
@@ -18,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Listing() {
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [listings, setListings] = useState([]);
   const [currImage, setCurrImage] = useState(0);
@@ -35,6 +43,7 @@ export default function Listing() {
   const [newCategory, setNewCategory] = useState("");
   const [newSize, setNewSize] = useState("");
   const [newPrice, setNewPrice] = useState(0);
+  const finalRef = React.useRef(null);
 
   AWS.config.update({
     region: "us-east-2",
@@ -233,11 +242,33 @@ export default function Listing() {
               ) : (
                 <p className="mb-4 text-3xl font-bold">${curr.price}</p>
               )}
-              {isMyListing ? null : (
-                <Button size="lg" colorScheme="green">
+              {/* {isMyListing ? null : ( */}
+              <div>
+                <Button size="lg" onClick={onOpen} colorScheme="green">
                   Contact
                 </Button>
-              )}
+                <Modal
+                  finalFocusRef={finalRef}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>Seller contact information</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <p>Email: {user.primaryEmailAddress.emailAddress}</p>
+                    </ModalBody>
+
+                    <ModalFooter>
+                      <Button colorScheme="green" onClick={onClose}>
+                        Done
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </div>
+              {/* )} */}
               <p className="mb-2 text-2xl font-bold mt-8">Description</p>
               {editMode ? (
                 <Textarea
