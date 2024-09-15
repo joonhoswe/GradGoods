@@ -54,7 +54,7 @@ export default function Listing() {
 
   // const handleUpdate = async (item) => {
   //     try {
-  //       const response = await axios.post(
+  //       const response = await axios.patch(
   //         "http://127.0.0.1:8000/api/post/",
   //         dataForSql
   //       );
