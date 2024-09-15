@@ -9,7 +9,6 @@ import Profile from "./pages/profile.jsx";
 import { allSchools } from "./schoolData.js";
 import { Input, InputGroup, InputRightAddon, Heading, Box, List, ListItem, Text } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import MyImage from '../public/lightbulb.png';
 
 function App() {
   const [school, setSchool] = useState("");
