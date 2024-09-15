@@ -14,3 +14,12 @@ This all changes today, with GradGoods.
 
 GradGoods solves this issue by providing a centralized platform for college students both moving in and out of dorms, to securely and quickly buy and sell dorm essentials. By saving money for incoming students, returning money back to upperclassmen moving out, and reducing waste, GoodGrads is THE solution for this crisis.
 
+
+## Tech Stack
+Frontend: React + Vite + TailwindCSS <br/>
+Backend: Django + Python <br/>
+Database: SQLite <br/>
+External APIs/Libraries: OpenAI (GPT 4o-mini model for calculating waste savings), ChakraUI, Axios <br/>
+
+## Flow
+
