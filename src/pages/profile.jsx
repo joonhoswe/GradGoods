@@ -6,10 +6,13 @@ import axios from "axios";
 import placeholder from "../assets/placeholder.jpeg";
 import ItemCard from "../components/ItemCard";
 import { useNavigate } from "react-router-dom";
+import OpenAI from "openai";
 
 export default function Profile() {
   const { isSignedIn, user, isLoaded } = useUser();
   const navigate = useNavigate();
+  // const key = process.env.OPENAI_API_KEY;
+  // const openai = new OpenAI({ apiKey: key });
 
   const [listings, setListings] = useState([]);
   const [userListings, setUserListings] = useState([]);
@@ -63,7 +66,22 @@ export default function Profile() {
         }
       };
 
+      const getPounds = async () => {
+        // const completion = await openai.chat.completions.create({
+        //   model: "gpt-4o-mini",
+        //   messages: [
+        //     { role: "system", content: "You are a helpful assistant." },
+        //     {
+        //       role: "user",
+        //       content: "Write a haiku about recursion in programming.",
+        //     },
+        //   ],
+        // });
+        // console.log(completion.choices[0].message);
+      };
+
       fetchData();
+      getPounds();
     }
   }, [isSignedIn, user]); // Dependencies
 
