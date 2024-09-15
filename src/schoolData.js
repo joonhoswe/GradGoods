@@ -130,7 +130,6 @@ export const allSchools = [
     "Bentley University",
     "Berea College",
     "Berkeley College",
-    "Berkeley College",
     "Berklee College of Music",
     "Berry College",
     "Bethany College",

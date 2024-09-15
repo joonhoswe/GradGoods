@@ -1,26 +1,18 @@
 import { useState, useEffect, useCallback } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import Browse from "./pages/browse";
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import Browse from './pages/browse';
 import "./App.css";
 import Navbar from "./components/navbar";
-import PostListing from "./pages/postListing";
-import Profile from "./pages/profile.jsx";
+import PostListing from './pages/postListing';
 import { allSchools } from "./schoolData.js";
-import {
-  Input,
-  InputGroup,
-  InputRightAddon,
-  Heading,
-  Box,
-  List,
-  ListItem,
-} from "@chakra-ui/react";
+import { Input, InputGroup, InputRightAddon, Heading, Box, List, ListItem, Text } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
 function App() {
   const [school, setSchool] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,10 +28,28 @@ function App() {
 
   const handleInputChange = (event) => {
     setSchool(event.target.value);
+    setError("");
+  };
+
+  const hasSchool = (query) => {
+    return allSchools.some((school) =>
+      school.toLowerCase() === query.toLowerCase()
+    ); 
+  };
+  const getSchool = (query) => {
+    for (const name of allSchools) {
+      console.log(name.toLowerCase());
+      console.log(query.toLowerCase())
+      if (name.toLowerCase() == query.toLowerCase()) {
+        console.log(name)
+        return name;
+      }
+    }
+    return "";
   };
 
   const fetchSchoolSuggestions = (query) => {
-    return allSchools.filter((school) =>
+    return allSchools.filter(school =>
       school.toLowerCase().includes(query.toLowerCase())
     );
   };
@@ -50,57 +60,54 @@ function App() {
   };
 
   const handleSearch = () => {
-    console.log("search", school);
-    navigate("/browse", { state: { school } });
+    console.log("search", school);  
+    console.log(hasSchool(school));
+    if (hasSchool(school)) {
+      const properSchool = getSchool(school);
+      navigate("/browse", { state: { school : properSchool } }); 
+      setError("");
+    } else {
+      console.log("Error");
+      setError("No results found.");
+    }
   };
 
   const handleClickOutside = useCallback((event) => {
-    if (
-      !event.target.closest(".suggestions-box") &&
-      !event.target.closest(".chakra-input")
-    ) {
+    if (!event.target.closest('.suggestions-box') && !event.target.closest('.chakra-input')) {
       setShowSuggestions(false);
     }
   }, []);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [handleClickOutside]);
 
   return (
     <Routes>
-      <Route
-        path="/"
+      <Route 
+        path="/" 
         element={
-          <Home
-            onSearch={handleSearch}
-            onInputChange={handleInputChange}
-            school={school}
-            suggestions={suggestions}
-            handleSelectSuggestion={handleSelectSuggestion}
-            showSuggestions={showSuggestions}
-          />
-        }
+          <Home 
+            onSearch={handleSearch} 
+            onInputChange={handleInputChange} 
+            school={school} 
+            suggestions={suggestions} 
+            handleSelectSuggestion={handleSelectSuggestion} 
+            showSuggestions={showSuggestions} 
+            error={error}
+          />} 
       />
       <Route path="/browse" element={<Browse />} />
       <Route path="/postListing" element={<PostListing />} />
-      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }
 
-function Home({
-  onSearch,
-  onInputChange,
-  school,
-  suggestions,
-  handleSelectSuggestion,
-  showSuggestions,
-}) {
+function Home({ onSearch, onInputChange, school, suggestions, handleSelectSuggestion, showSuggestions, error }) {
   return (
     <div>
       <div className="fixed top-0 left-0 w-full z-50">
@@ -111,12 +118,7 @@ function Home({
           GradGoods
         </Heading>
         <div className="flex flex-row justify-center">
-          <InputGroup
-            size="lg"
-            width="45vw"
-            className="mt-8"
-            position="relative"
-          >
+          <InputGroup size="lg" width="45vw" className="mt-8" position="relative">
             <Input
               onChange={onInputChange}
               value={school}
@@ -126,7 +128,7 @@ function Home({
                   onSearch();
                 }
               }}
-              className="chakra-input"
+              className="chakra-input" 
             />
             {showSuggestions && suggestions.length > 0 && (
               <Box
@@ -139,15 +141,15 @@ function Home({
                 boxShadow="md"
                 zIndex="1"
                 mt="2"
-                maxH="200px"
-                overflowY="auto"
+                maxH="200px" 
+                overflowY="auto" 
               >
                 <List spacing={1}>
                   {suggestions.map((suggestion, index) => (
                     <ListItem
                       key={index}
                       padding="2"
-                      _hover={{ bg: "gray.100", cursor: "pointer" }}
+                      _hover={{ bg: 'gray.100', cursor: 'pointer' }}
                       onClick={() => handleSelectSuggestion(suggestion)}
                     >
                       {suggestion}
@@ -156,13 +158,19 @@ function Home({
                 </List>
               </Box>
             )}
-            <InputRightAddon
-              onClick={onSearch}
-              className="hover:cursor-pointer"
-            >
+            <InputRightAddon onClick={onSearch}>
               <SearchIcon color="gray.600" />
             </InputRightAddon>
           </InputGroup>
+        </div>
+        <div className="flex flex-row justify-center">
+          {error && (
+            <Box textAlign="center" mt="2" width="45vw">
+              <Text color="red.500" fontSize="sm">
+                {error}
+              </Text>
+            </Box>
+          )}
         </div>
       </div>
     </div>
