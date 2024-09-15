@@ -32,7 +32,7 @@ export default function Navbar() {
         </div>
         <div className="flex items-center space-x-4">
           <SignedIn>
-            <Link to="/postListing" className="text-lg text-gray-800">
+            <Link to="/postListing" className="text-lg text-gray-800 transition duration-300 ease-in-out hover:text-green-500">
               Sell
             </Link>{" "}
             {/* Use Link instead of a */}
