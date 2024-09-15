@@ -76,11 +76,15 @@ export default function Browse() {
           }
           if (priceFilter && listing.price) {
             const price = listing.price;
-            if (priceFilter === "0-20" && (price < 0 || price > 20))
+            if (priceFilter === "0-20" && (price < 0 || price > 20)) {
               return false;
-            if (priceFilter === "20-50" && (price < 20 || price > 50))
+            }
+            if (priceFilter === "20-50" && (price < 20 || price > 50)) {
               return false;
-            if (priceFilter === ">50" && price <= 50) return false;
+            }
+            if (priceFilter === ">50" && price <= 50) {
+              return false;
+            }
           }
           return true;
         });
