@@ -49,8 +49,8 @@ export default function Browse() {
           if (sizeFilter && !listing.size?.includes(sizeFilter)) {
             return false;
           }
-          if (priceFilter) {
-            const price = parseFloat(listing.price?.replace('$', ''));
+          if (priceFilter && listing.price) {
+            const price = listing.price;
             if (priceFilter === "0-20" && (price < 0 || price > 20)) return false;
             if (priceFilter === "20-50" && (price < 20 || price > 50)) return false;
             if (priceFilter === ">50" && price <= 50) return false;
@@ -160,7 +160,7 @@ export default function Browse() {
             <Select onChange={handlePrice} placeholder="Price" size="sm" width="150px">
               <option value="0-20">Under $20</option>
               <option value="20-50">$20-$50</option>
-              <option value=">50">$50 & Above</option>
+              <option value=">50">Above $50</option>
             </Select>
           </Box>
           {(selectedTag === "Clothing" || selectedTag === "Shoes") && (
