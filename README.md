@@ -17,7 +17,7 @@ GradGoods solves this issue by providing a centralized platform for college stud
 Frontend: React + Vite + TailwindCSS <br/>
 Backend: Django + Python <br/>
 Database: SQLite <br/>
-External APIs/Libraries: OpenAI (GPT 4o-mini model for calculating waste savings), ChakraUI, Axios <br/>
+External APIs/Libraries: Clerk Auth, OpenAI (GPT 4o-mini model for calculating waste savings), ChakraUI, Axios <br/>
 
 ## Flow
 

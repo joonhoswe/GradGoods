@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Heading,
@@ -7,7 +7,14 @@ import {
   Icon,
   Input,
   Textarea,
-  Select,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useUser } from "@clerk/clerk-react";
@@ -18,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Listing() {
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [listings, setListings] = useState([]);
   const [currImage, setCurrImage] = useState(0);
@@ -35,6 +43,7 @@ export default function Listing() {
   const [newCategory, setNewCategory] = useState("");
   const [newSize, setNewSize] = useState("");
   const [newPrice, setNewPrice] = useState(0);
+  const finalRef = React.useRef(null);
 
   AWS.config.update({
     region: "us-east-2",
@@ -66,7 +75,7 @@ export default function Listing() {
     } catch (error) {
       console.error("Error deleting listing:", error);
     } finally {
-      navigate("/browse", { state: { school } });
+      navigate("/profile");
     }
   };
 
@@ -187,36 +196,16 @@ export default function Listing() {
             </div>
             <div className="w-[50%] ml-10">
               <div className="flex flex-row justify-between items-center">
-                {editMode ? (
-                  <Input
-                    value={newName}
-                    onChange={(event) => {
-                      setNewName(event.target.value);
-                    }}
-                    fontSize="3xl"
-                    fontWeight="medium"
-                    borderColor="gray.300"
-                    _placeholder={{ color: "gray.500" }}
-                    _focus={{
-                      borderColor: "blue.500",
-                      boxShadow: "0 0 0 1px blue.500",
-                    }}
-                    py={6}
-                  />
-                ) : (
-                  <div className="flex flex-row justify-between">
-                    <Heading size="2xl">{curr.itemName}</Heading>
-                    {isMyListing ? (
-                      <Button
-                        onClick={() => handleDelete(curr)}
-                        size="lg"
-                        colorScheme="red"
-                      >
-                        Delete item
-                      </Button>
-                    ) : null}
-                  </div>
-                )}
+                <Heading size="2xl">{curr.itemName}</Heading>
+                {isMyListing ? (
+                  <Button
+                    onClick={() => handleDelete(curr)}
+                    size="lg"
+                    colorScheme="red"
+                  >
+                    Delete item
+                  </Button>
+                ) : null}
               </div>
               <p className="my-4 text-2xl font-medium">Sold by: {curr.owner}</p>
               {curr.itemCategory === "Clothing" ||
@@ -240,7 +229,7 @@ export default function Listing() {
               <p className="mb-4 text-xl font-normal">Size: {curr.size}</p>
               {editMode ? (
                 <div className="flex flex-row mb-4">
-                  <p className="text-2xl font-bold">$</p>
+                  <p className="text-3xl font-bold">$</p>
                   <Input
                     ml={2}
                     w={100}
@@ -251,13 +240,35 @@ export default function Listing() {
                   />
                 </div>
               ) : (
-                <p className="mb-4 text-2xl font-bold">${curr.price}</p>
+                <p className="mb-4 text-3xl font-bold">${curr.price}</p>
               )}
-              {isMyListing ? null : (
-                <Button size="lg" colorScheme="green">
+              {/* {isMyListing ? null : ( */}
+              <div>
+                <Button size="lg" onClick={onOpen} colorScheme="green">
                   Contact
                 </Button>
-              )}
+                <Modal
+                  finalFocusRef={finalRef}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>Seller contact information</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <p>Email: {user.primaryEmailAddress.emailAddress}</p>
+                    </ModalBody>
+
+                    <ModalFooter>
+                      <Button colorScheme="green" onClick={onClose}>
+                        Done
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </div>
+              {/* )} */}
               <p className="mb-2 text-2xl font-bold mt-8">Description</p>
               {editMode ? (
                 <Textarea
