@@ -134,72 +134,79 @@ export default function Listing() {
         <Navbar />
       </div>
       <div className="mt-20 mx-[5vw] flex flex-row justify-between">
-        <div className="w-[50%] flex flex-row justify-center items-center">
-          <Icon
-            boxSize={10}
-            cursor={currImage > 0 ? "pointer" : null}
-            as={ChevronLeftIcon}
-            mr="4"
-            onClick={currImage > 0 ? decreaseImageIndex : null}
-            color={currImage > 0 ? "gray.700" : "gray.300"}
-          />
-          <Image
-            width="450px"
-            height="450px"
-            objectFit="cover"
-            src={imagesArr[currImage]}
-            alt="product-image"
-          />
-          <Icon
-            cursor={currImage < imagesArr.length - 1 ? "pointer" : null}
-            boxSize={10}
-            color={currImage < imagesArr.length - 1 ? "gray.700" : "gray.300"}
-            ml="4"
-            as={ChevronRightIcon}
-            onClick={
-              currImage < imagesArr.length - 1 > 0 ? increaseImageIndex : null
-            }
-          />
-        </div>
-        <div className="w-[50%] ml-10">
-          <div className="flex flex-row justify-between">
-            <Heading size="2xl">{curr.itemName}</Heading>
-            {isMyListing ? (
-              <div>
-                <Button
-                  borderRadius="full"
-                  onClick={() => handleUpdate(curr.itemName)}
-                >
-                  Edit
-                </Button>
+        {curr ? (  // Check if `curr` exists before trying to access its properties
+          <>
+            <div className="w-[50%] flex flex-row justify-center items-center">
+              <Icon
+                boxSize={10}
+                cursor={currImage > 0 ? "pointer" : null}
+                as={ChevronLeftIcon}
+                mr="4"
+                onClick={currImage > 0 ? decreaseImageIndex : null}
+                color={currImage > 0 ? "gray.700" : "gray.300"}
+              />
+              <Image
+                width="450px"
+                height="450px"
+                objectFit="cover"
+                src={imagesArr[currImage]}
+                alt="product-image"
+              />
+              <Icon
+                cursor={currImage < imagesArr.length - 1 ? "pointer" : null}
+                boxSize={10}
+                color={currImage < imagesArr.length - 1 ? "gray.700" : "gray.300"}
+                ml="4"
+                as={ChevronRightIcon}
+                onClick={
+                  currImage < imagesArr.length - 1 > 0 ? increaseImageIndex : null
+                }
+              />
+            </div>
+            <div className="w-[50%] ml-10">
+              <div className="flex flex-row justify-between">
+                <Heading size="2xl">{curr.itemName}</Heading>
+                {isMyListing ? (
+                  <div>
+                    <Button
+                      borderRadius="full"
+                      onClick={() => handleUpdate(curr.itemName)}
+                    >
+                      Edit
+                    </Button>
+                  </div>
+                ) : null}
               </div>
-            ) : null}
-          </div>
-          <p className="mb-4 text-2xl font-medium">{curr.owner}</p>
-          {curr.itemCategory === "Clothing" || curr.itemCategory === "Shoes" ? (
-            <div className="mb-4 text-2xl font-normal">Size: </div>
-          ) : null}
-          <p className="mb-4 text-xl font-normal">
-            Category: {curr.itemCategory}
-          </p>
-          <p className="mb-4 text-2xl font-bold">${curr.price}</p>
-          {isMyListing ? (
-            <Button
-              onClick={() => handleDelete(curr.itemName)}
-              size="lg"
-              colorScheme="red"
-            >
-              Delete
-            </Button>
-          ) : (
-            <Button size="lg" colorScheme="green">
-              Buy now
-            </Button>
-          )}
-          <p className="mb-2 text-2xl font-bold mt-8">Description</p>
-          <p className="text-lg">{curr.description}</p>
-        </div>
+              <p className="mb-4 text-2xl font-medium">{curr.owner}</p>
+              {curr.itemCategory === "Clothing" || curr.itemCategory === "Shoes" ? (
+                <div className="mb-4 text-2xl font-normal">Size: </div>
+              ) : null}
+              <p className="mb-4 text-xl font-normal">
+                Category: {curr.itemCategory}
+              </p>
+              <p className="mb-4 text-2xl font-bold">${curr.price}</p>
+              {isMyListing ? (
+                <Button
+                  onClick={() => handleDelete(curr.itemName)}
+                  size="lg"
+                  colorScheme="red"
+                >
+                  Delete
+                </Button>
+              ) : (
+                <Button size="lg" colorScheme="green">
+                  Buy now
+                </Button>
+              )}
+              <p className="mb-2 text-2xl font-bold mt-8">Description</p>
+              <p className="text-lg">{curr.description}</p>
+            </div>
+          </>
+        ) : (
+          <div>Loading listing details...</div> // Placeholder while curr is still null
+        )}
       </div>
     </div>
   );
+  
 }
