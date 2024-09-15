@@ -60,14 +60,11 @@ function App() {
   };
 
   const handleSearch = () => {
-    console.log("search", school);  
-    console.log(hasSchool(school));
     if (hasSchool(school)) {
       const properSchool = getSchool(school);
       navigate("/browse", { state: { school : properSchool } }); 
       setError("");
     } else {
-      console.log("Error");
       setError("No results found.");
     }
   };
