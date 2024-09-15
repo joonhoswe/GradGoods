@@ -36,6 +36,19 @@ def getListing(request):
         #return the serialized listings
         return Response(serializer.data)
 
+@api_view(['PATCH'])
+def joinListing(request):
+    if request.method == 'PATCH':
+        id = request.data.get('id')
+
+        if not id:
+            return Response({'error': 'ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        listing = get_object_or_404(Listing, id=id) 
+        listing.save()
+
+        return Response({'message': 'Successfully updated the listing'}, status=status.HTTP_200_OK)
+    
 # delete a listing
 @api_view(['DELETE'])
 def deleteListing(request, id):
