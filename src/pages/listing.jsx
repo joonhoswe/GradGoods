@@ -252,7 +252,7 @@ export default function Listing() {
               )}
               {isMyListing ? null : (
                 <Button size="lg" colorScheme="green">
-                  Buy now
+                  Contact
                 </Button>
               )}
               <p className="mb-2 text-2xl font-bold mt-8">Description</p>
