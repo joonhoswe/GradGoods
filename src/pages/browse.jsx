@@ -32,10 +32,10 @@ export default function Browse() {
   const { isSignedIn, user, isLoaded } = useUser();
 
   const isEmailValid = user
-  ? user.primaryEmailAddress.emailAddress.substring(
-      user.primaryEmailAddress.emailAddress.length - 4
-    ) == ".edu"
-  : false;
+    ? user.primaryEmailAddress.emailAddress.substring(
+        user.primaryEmailAddress.emailAddress.length - 4
+      ) == ".edu"
+    : false;
 
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
@@ -135,17 +135,18 @@ export default function Browse() {
   const onSearch = () => {
     fetchData();
   };
-  
+
   return (
     <div>
-        <Navbar />
+      {/* <div className="fixed top-0"> */}
+      <Navbar />
+      {/* </div> */}
 
-        {!isEmailValid && (
-          <div className="flex items-center justify-center w-full bg-red-500 text-white p-4 font-bold z-50">
-            You MUST have a valid .edu email address to purchase listings!
-          </div>
-        )}
-
+      {!isEmailValid && (
+        <div className="flex items-center justify-center w-full bg-red-500 text-white p-4 font-bold z-50">
+          You MUST have a valid .edu email address to purchase listings!
+        </div>
+      )}
 
       <div className="mt-24 mx-[5vw]">
         <Heading
@@ -259,7 +260,10 @@ export default function Browse() {
             )}
           </HStack>
           <div className="mt-8 mb-24">
-            <BrowseItemDisplay items={filteredListings} isEmailValid={isEmailValid}/>
+            <BrowseItemDisplay
+              items={filteredListings}
+              isEmailValid={isEmailValid}
+            />
           </div>
         </div>
       </div>

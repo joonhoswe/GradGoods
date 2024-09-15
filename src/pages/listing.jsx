@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Heading, Button, Image, Icon } from "@chakra-ui/react";
+import {
+  Heading,
+  Button,
+  Image,
+  Icon,
+  Input,
+  Textarea,
+  Select,
+} from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useUser } from "@clerk/clerk-react";
 import { useParams } from "react-router-dom";
@@ -17,6 +25,13 @@ export default function Listing() {
   const { id } = useParams();
   const [curr, setCurr] = useState(null);
   const [isMyListing, setIsMyListing] = useState(false);
+
+  const [editMode, setEditMode] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [newCategory, setNewCategory] = useState("");
+  const [newSize, setNewSize] = useState("");
+  const [newPrice, setNewPrice] = useState(0);
 
   AWS.config.update({
     region: "us-east-2",
@@ -113,12 +128,12 @@ export default function Listing() {
       setImagesArr(curr.imageURLs.split(","));
       console.log(curr.imageURLs.split(","));
       setIsMyListing(user.username === curr.owner);
+      setNewName(curr.itemName);
+      setNewDescription(curr.description);
+      setNewCategory(curr.itemCategory);
+      setNewPrice(curr.price);
     }
   }, [curr]);
-
-  // if (!curr) {
-  //   return <div>does not exist</div>;
-  // }
 
   const decreaseImageIndex = () => {
     setCurrImage(currImage - 1);
@@ -168,28 +183,87 @@ export default function Listing() {
               />
             </div>
             <div className="w-[50%] ml-10">
-              <div className="flex flex-row justify-between">
-                <Heading size="2xl">{curr.itemName}</Heading>
-                {isMyListing ? (
-                  <div>
-                    <Button
-                      borderRadius="full"
-                      onClick={() => handleUpdate(curr)}
-                    >
-                      Edit
-                    </Button>
-                  </div>
-                ) : null}
+              <div className="flex flex-row justify-between items-center">
+                {editMode ? (
+                  <Input
+                    value={newName}
+                    onChange={(event) => {
+                      setNewName(event.target.value);
+                    }}
+                    fontSize="3xl"
+                    fontWeight="medium"
+                    borderColor="gray.300"
+                    _placeholder={{ color: "gray.500" }}
+                    _focus={{
+                      borderColor: "blue.500",
+                      boxShadow: "0 0 0 1px blue.500",
+                    }}
+                    py={6}
+                  />
+                ) : (
+                  <Heading size="2xl">{curr.itemName}</Heading>
+                )}
+                <div>
+                  {isMyListing && (
+                    <div>
+                      {editMode ? (
+                        <Button
+                          ml="20px"
+                          borderRadius="full"
+                          onClick={() => {
+                            // Your save logic here
+                            setEditMode(false); // Optionally disable edit mode on save
+                          }}
+                        >
+                          Save
+                        </Button>
+                      ) : (
+                        <Button
+                          borderRadius="full"
+                          onClick={() => setEditMode(true)}
+                        >
+                          Edit
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
-              <p className="mb-4 text-2xl font-medium">{curr.owner}</p>
+              <p className="my-4 text-2xl font-medium">Sold by: {curr.owner}</p>
               {curr.itemCategory === "Clothing" ||
               curr.itemCategory === "Shoes" ? (
-                <div className="mb-4 text-2xl font-normal">Size: </div>
+                <div className="mb-4 text-2xl font-normal flex flex-row items-center">
+                  Category:{" "}
+                  {editMode ? (
+                    <Input
+                      ml={4}
+                      size="lg"
+                      value={newCategory}
+                      onChange={(event) => {
+                        setNewCategory(event.target.value);
+                      }}
+                    />
+                  ) : (
+                    curr.itemCategory
+                  )}
+                </div>
               ) : null}
-              <p className="mb-4 text-xl font-normal">
-                Category: {curr.itemCategory}
-              </p>
-              <p className="mb-4 text-2xl font-bold">${curr.price}</p>
+              <p className="mb-4 text-xl font-normal">Size: {curr.size}</p>
+              {editMode ? (
+                <div className="flex flex-row mb-4">
+                  <p className="text-2xl font-bold">$</p>
+                  <Input
+                    ml={2}
+                    w={100}
+                    value={newPrice}
+                    onChange={(event) => {
+                      setNewPrice(event.target.value);
+                    }}
+                  />
+                </div>
+              ) : (
+                <p className="mb-4 text-2xl font-bold">${curr.price}</p>
+              )}
               {isMyListing ? (
                 <Button
                   onClick={() => handleDelete(curr)}
@@ -204,7 +278,16 @@ export default function Listing() {
                 </Button>
               )}
               <p className="mb-2 text-2xl font-bold mt-8">Description</p>
-              <p className="text-lg">{curr.description}</p>
+              {editMode ? (
+                <Textarea
+                  onChange={(event) => {
+                    setNewDescription(event.target.value);
+                  }}
+                  value={newDescription}
+                />
+              ) : (
+                <p className="text-lg">{curr.description}</p>
+              )}
             </div>
           </>
         ) : (
