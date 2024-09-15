@@ -27,6 +27,7 @@ export default function Browse() {
     "Electronics",
     "Shoes",
     "Textbooks",
+    "Miscellaneous"
   ];
   const [selectedTag, setSelectedTag] = useState("View All");
   const { isSignedIn, user, isLoaded } = useUser();
@@ -76,11 +77,15 @@ export default function Browse() {
           }
           if (priceFilter && listing.price) {
             const price = listing.price;
-            if (priceFilter === "0-20" && (price < 0 || price > 20))
+            if (priceFilter === "0-20" && (price < 0 || price > 20)) {
               return false;
-            if (priceFilter === "20-50" && (price < 20 || price > 50))
+            }
+            if (priceFilter === "20-50" && (price < 20 || price > 50)) {
               return false;
-            if (priceFilter === ">50" && price <= 50) return false;
+            }
+            if (priceFilter === ">50" && price <= 50) {
+              return false;
+            }
           }
           return true;
         });
@@ -186,7 +191,7 @@ export default function Browse() {
                 }
               }}
             />
-            <InputRightAddon>
+            <InputRightAddon  _hover={{ bg: 'gray.50', cursor: 'pointer' }}>
               <SearchIcon color="gray.600" />
             </InputRightAddon>
           </InputGroup>
