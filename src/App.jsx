@@ -114,8 +114,8 @@ function Home({ onSearch, onInputChange, school, suggestions, handleSelectSugges
         <Navbar />
       </div>
       
-      <div className="mt-[25vh]" style = {{zIndex:2}}>
-        <Heading className="text-left" as="h2" size="4xl" p={0} noOfLines={1} paddingLeft="100px">
+      <div className="mt-[20vh]" style = {{zIndex:2}}>
+        <Heading className="text-left" as="h2" size="4xl" p={0} noOfLines={1} paddingLeft="100px" paddingTop="50px">
           <span style={{ fontWeight: 'normal' }}>Grad</span>
           <span style={{ fontWeight: 'bold', color: '#5abe23' }}>Goods</span>
         </Heading>
