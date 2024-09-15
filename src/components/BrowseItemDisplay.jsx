@@ -10,7 +10,7 @@ export default function BrowseItemDisplay({ items }) {
     <Wrap spacing={4}>
       {items.map((item) => {
         return (
-          <WrapItem>
+          <WrapItem key={item.id}>
             <ItemCard item={item} />
           </WrapItem>
         );
