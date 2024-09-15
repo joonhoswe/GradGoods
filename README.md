@@ -8,7 +8,7 @@ Every year, over 640 pounds of waste are trashed by college students that are mo
 
 The current solution for this idea? Outdated facebook groups filled with scammers, QR codes linked to google slides posted around buildings, and word of mouth. None of which are secure nor effective for students who need to purchase dorm essentials sustainably, especially those who may be traveling from across the country or even the world.
 
-This all changes today, with GradGoods.
+Our team set our sights on changing the way college students move. Enter: GradGoods.
 
 GradGoods solves this issue by providing a centralized, secure, and intuitive platform for college students both moving in and out of dorms, to securely and quickly buy and sell dorm essentials. GradGoods enforces valid .edu emails only, by leveraging Clerk Authentication. GradGoods also leverages ChatGPT to accurately estimate how many pounds of waste each seller has reduced by selling their items. By saving money for incoming students, returning money back to upperclassmen moving out, and reducing waste, GoodGrads is THE solution for this crisis.
 
