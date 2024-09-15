@@ -451,28 +451,6 @@ export default function PostListing() {
                     </div>
                 </div>
               </div>
-
-              {/* each image uploaded */}
-              <div className="mt-4 w-5/6">
-                {fileNames.map((name, index) => (
-                  <div
-                    key={index}
-                    className="w-full h-8 flex items-center justify-between rounded-lg bg-gray-200 p-2 mb-2"
-                  >
-                    <p className="text-blue-500 text-ellipsis overflow-hidden whitespace-nowrap" style = {{fontSize:20,maxWidth:500}}>{name}</p>
-                    <button
-                      onClick={() => handleFileDelete(index)}
-                      className={`text-red-500 text-sm hover:text-gray-400 transition ease-in-out duration-300 ${
-                        !isEmailValid ? "cursor-not-allowed" : "cursor-pointer"
-                      }`}
-                      title="Remove Image"
-                      disabled={!isEmailValid}
-                    >
-                      x
-                    </button>
-                  </div>
-                ))}
-              </div>
         </>
     );
 }
