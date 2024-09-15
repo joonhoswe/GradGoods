@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardBody, Image, Stack, Heading, Text } from "@chakra-ui/react";
+import axios from "axios";
 
 // item fields:
 // title, imageUrl, category,

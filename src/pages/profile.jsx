@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import Navbar from "../components/navbar";
-import { Heading, Divider } from "@chakra-ui/react";
+import { Heading, Divider, Button } from "@chakra-ui/react";
 import axios from "axios";
-import placeholder from "../assets/placeholder.jpeg";
 import ItemCard from "../components/ItemCard";
 import { useNavigate } from "react-router-dom";
 import OpenAI from "openai";
@@ -21,10 +20,9 @@ export default function Profile() {
   const [userListings, setUserListings] = useState([]);
   const [userActiveListings, setUserActiveListings] = useState([]);
   const [userInactiveListings, setUserInactiveListings] = useState([]);
-
+  const [isMarkingComplete, setIsMarkingComplete] = useState(false);
   const [active, setActive] = useState(true);
 
-  // for inactive listings, add up all the prices to calculate money earned
   const calculateEarnings = () => {
     return userInactiveListings.reduce(
       (total, listing) => total + (listing.price || 0),
@@ -33,81 +31,61 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    if (isSignedIn && user) {
+    if (isSignedIn && isLoaded && user) {
       const fetchData = async () => {
         try {
           const response = await axios.get("http://127.0.0.1:8000/api/get/");
           const database = response.data;
-          if (user) {
-            setListings(response.data);
-            const userJoinedListings = database.filter(
-              (listing) => listing.owner === user.username
-            );
-            setUserListings(userJoinedListings);
+          const userJoinedListings = database.filter(
+            (listing) => listing.owner === user.username
+          );
+          setUserListings(userJoinedListings);
 
-            const activeListings = userJoinedListings.filter(
-              (listing) => listing.active === true
-            );
-            setUserActiveListings(activeListings);
+          const activeListings = userJoinedListings.filter(
+            (listing) => listing.active === true
+          );
+          setUserActiveListings(activeListings);
 
-            const inactiveListings = userJoinedListings.filter(
-              (listing) => listing.active === false
-            );
-            setUserInactiveListings(inactiveListings);
-          }
+          const inactiveListings = userJoinedListings.filter(
+            (listing) => listing.active === false
+          );
+          setUserInactiveListings(inactiveListings);
         } catch (error) {
-          console.error("Error fetching Data:", error);
-          if (error.response) {
-            console.error("Response data:", error.response.data);
-            console.error("Response status:", error.response.status);
-            console.error("Response headers:", error.response.headers);
-          } else if (error.request) {
-            console.error("Request data:", error.request);
-          } else {
-            console.error("Error message:", error.message);
-          }
+          console.error("Error fetching data:", error);
         }
       };
 
-      const getPounds = async (item) => {
-        const completion = await openai.chat.completions.create({
-          model: "gpt-4o-mini",
-          messages: [
-            { role: "system", content: "You are a helpful assistant." },
-            {
-              role: "user",
-              content: `Tell me with an integer number how many pounds a ${item} would weigh. Return your response as just a number and nothing else. If you don't understand for any given object, just return 0.`,
-            },
-          ],
-        });
-        console.log(completion.choices[0].message.content);
-      };
-
       fetchData();
-      userInactiveListings.forEach((listing) => {
-        const p = getPounds(listing.price);
-        setPounds(pounds + p);
-      });
     }
-  }, [isSignedIn, user]); // Dependencies
-
-  useEffect(() => {}, [active]);
-
-  if (!isSignedIn) {
-    return <div>Not signed in</div>;
-  }
+  }, [isSignedIn, isLoaded, user]);
 
   const handleCardClick = (id) => {
-    navigate(`/listing/${id}`);
+    if (isMarkingComplete) {
+      markComplete(id);
+    } else {
+      navigate(`/listing/${id}`);
+    }
   };
 
-  const { imageUrl } = user;
-  const params = new URLSearchParams();
-  params.set("height", "200");
-  params.set("width", "200");
-  params.set("quality", "100");
-  params.set("fit", "crop");
-  const imageSrc = `${imageUrl}?${params.toString()}`;
+  const markComplete = async (id) => {
+    try {
+      const response = await axios.patch(`http://127.0.0.1:8000/api/update/${id}/`, {
+        active: false, // The field to update
+      });
+      console.log("Listing marked complete:", response.data);
+
+      const updatedListings = listings.map((listing) =>
+        listing.id === id ? { ...listing, active: false } : listing
+      );
+      setListings(updatedListings);
+      setUserActiveListings(updatedListings.filter(listing => listing.active));
+      setUserInactiveListings(updatedListings.filter(listing => !listing.active));
+      
+      setIsMarkingComplete(false);
+    } catch (error) {
+      console.error("Error marking listing as complete:", error);
+    }
+  };
 
   return (
     <div>
@@ -115,50 +93,56 @@ export default function Profile() {
         <Navbar />
       </div>
       <div className="mt-24 mx-[5vw]">
-        <Heading
-          className="text-left mb-3"
-          as="h2"
-          p={0}
-          noOfLines={1}
-        >
+        <Heading className="text-left mb-3" as="h2" p={0} noOfLines={1}>
           My Account
         </Heading>
         <div className="flex flex-row justify-between">
           <div className="flex flex-row">
-            <img
-              src={imageSrc}
-              alt="pfp"
-              className="mr-6"
-              style={{
-                width: "150px",
-                height: "150px",
-                borderRadius: "50%",
-                objectFit: "cover",
-              }}
-            />
-            <div className="flex items-center">
-              <Heading>{user.username}</Heading>
-            </div>
+            {isLoaded && user ? (
+              <>
+                <img
+                  src={user.imageUrl || placeholder}
+                  alt="Profile picture"
+                  className="mr-6"
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
+                <div className="flex items-center">
+                  <Heading>{user?.username || "User"}</Heading>
+                </div>
+              </>
+            ) : (
+              <div>Loading...</div>
+            )}
           </div>
 
           <div className="flex flex-col items-end">
-            {/* Dynamically display total earnings */}
-            <h1 className="text-3xl font-bold">
-              {" "}
-              💰 Earnings: ${calculateEarnings()}
-            </h1>
-            <h1 className="text-3xl font-bold text-green-500">
-              🍃 ${pounds} of waste saved
-            </h1>
+            <h1 className="text-3xl font-bold"> 💰 Earnings: ${calculateEarnings()}</h1>
+            <h1 className="text-3xl font-bold text-green-500"> 🍃 ${pounds} of waste saved</h1>
           </div>
         </div>
 
+        {/* Button aligned to the right above the divider */}
+        <div className="flex justify-end mb-2">
+          <button
+            className="rounded-md w-36 h-10 bg-green-500 text-white font-bold"
+            onClick={() => setIsMarkingComplete(true)}
+          >
+            Mark Complete
+          </button>
+        </div>
         <Divider />
 
         <div className="flex flex-row w-full h-full py-8">
           <div className="flex flex-row w-1/4 h-full">
             <div className="flex flex-col space-y-2">
-              <Heading mb={2} size="lg">My Listings</Heading>
+              <Heading mb={2} size="lg">
+                My Listings
+              </Heading>
               <p
                 onClick={() => setActive(true)}
                 className={`text-lg font-bold hover:cursor-pointer transition ease-in-out duration-300 hover:text-green-500 ${
@@ -181,8 +165,11 @@ export default function Profile() {
             <div className="flex gap-6 items-center flex-wrap">
               {active
                 ? userActiveListings.map((listing, index) => (
-                    <div onClick={() => handleCardClick(listing.id)}>
-                      <ItemCard item={listing} key={index} />
+                    <div
+                      onClick={() => handleCardClick(listing.id)}
+                      key={index}
+                    >
+                      <ItemCard item={listing} />
                     </div>
                   ))
                 : userInactiveListings.map((listing, index) => (

@@ -9,4 +9,4 @@ class Listing(models.Model):
     price = models.PositiveIntegerField()
     imageURLs = models.TextField()  # Storing the AWS URLs as a comma-separated string
     active = models.BooleanField(default=True)  # represents whether listing is active or not
-    size = models.CharField(max_length=20, default='N/A')
+    size = models.CharField(max_length=40, default='N/A')
