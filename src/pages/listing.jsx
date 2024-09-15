@@ -11,13 +11,14 @@ import {
 } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useUser } from "@clerk/clerk-react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../components/navbar";
 import AWS from "aws-sdk";
 import { useNavigate } from "react-router-dom";
 
 export default function Listing() {
   const navigate = useNavigate();
+
   const [listings, setListings] = useState([]);
   const [currImage, setCurrImage] = useState(0);
   const [imagesArr, setImagesArr] = useState([]);
@@ -25,6 +26,8 @@ export default function Listing() {
   const { id } = useParams();
   const [curr, setCurr] = useState(null);
   const [isMyListing, setIsMyListing] = useState(false);
+  const location = useLocation();
+  const { school } = location.state || {};
 
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState("");
