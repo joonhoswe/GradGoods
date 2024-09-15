@@ -127,12 +127,26 @@ export default function postListing() {
         <div className='h-full w-full lg:p-32 flex justify-center items-center'>
             <div className='flex flex-row h-full w-full'>
                 {/* left side of page */}
-                <div className='flex flex-col text-3xl font-bold h-full w-1/2'>
-                    <h1> List an Item </h1>
-
+                <div className='flex flex-col text-3xl font-bold h-full w-full md:w-1/2'>
+                    <h1 > List an Item </h1>
                     {/* image upload box */}
-                    <div className="flex flex-col items-center">
-                        <div className="flex items-center justify-center h-72 w-full rounded-lg ring-2 ring-red-500 relative">
+                    <div className="flex flex-col"  style = {{paddingTop: '30px'}}>
+                        {/* Make Image Input */}
+                        <div className="flex items-center">
+                            <div
+                                className="flex items-center justify-center h-8 w-8 bg-green-700 text-white rounded-full mr-4"
+                                style={{ fontSize: '14px' }}
+                            >
+                                1
+                            </div>
+                            <label
+                                className="font-medium"
+                                style={{ paddingLeft: '0px', paddingBottom: '1px', fontSize: '20px'}}
+                            >
+                                Image Upload
+                            </label>
+                        </div>
+                        <div className="flex items-center justify-center h-72 w-full max-w-lg rounded-lg border-2 border-grey mt-3 relative" style={{ width: '500px', paddingTop: '5px'}}>
                             <input
                             className="absolute opacity-0 w-full h-full cursor-pointer"
                             type="file"
@@ -142,8 +156,8 @@ export default function postListing() {
                             />
                             <div className="flex flex-col items-center justify-center">
                                 <img src={upload} alt='upload' className='h-24 w-24'/>
-                                <p className="mt-2 text-gray-500"> Drag & Drop your images here, or </p>
-                                <button className="mt-2 text-blue-500 underline"> Choose File </button>
+                                <p className="mt-2 text-gray-500" style={{fontSize:'20px'}}> Drag & Drop your images here, or </p>
+                                <button className="mt-2 text-blue-500 underline" style={{fontSize:'20px'}}> Choose File </button>
                             </div>
                         </div>
 
