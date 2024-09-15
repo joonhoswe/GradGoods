@@ -15,7 +15,11 @@ dist-ssr
 .env
 .env.local
 
+
+venv/
+*.pyc
 __pycache__/
+
 */__pycache__/*
 
 # Editor directories and files
