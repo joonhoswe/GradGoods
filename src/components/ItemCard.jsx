@@ -12,6 +12,9 @@ import {
 // item fields:
 // title, imageUrl, category,
 const ItemCard = ({ item }) => {
+  const imageUrls = item.imageURLs.split(",");
+  const firstImage = imageUrls[0];
+
   return (
     <Card
       w="290px"
@@ -25,8 +28,9 @@ const ItemCard = ({ item }) => {
     >
       <CardBody>
         <Image
-          src={item.imageURLs[0]}
-          alt={item.title}
+          src={firstImage}
+          // src="https://gradgoodsimages.s3.us-east-2.amazonaws.com/Cmu%20Scs%20from%20Heather%20Miller.png"
+          alt={item.itemName}
           borderRadius="lg"
           objectFit="cover"
           boxSize="250px"
