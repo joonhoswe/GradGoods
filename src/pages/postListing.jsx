@@ -28,10 +28,11 @@ export default function postListing() {
 
     const eduEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+\.edu$/;
 
-    const isEmailValid = user ? eduEmailRegex.test(user.primaryEmailAddress.emailAddress) : false;
+    const isEmailValid = user ? eduEmailRegex.test(user.primaryEmailAddress.emailAddress) : true;
 
     if (user) {
         const owner = user.username
+        console.log(user);
     }
     
     const [itemName, setItemName] = useState('');
