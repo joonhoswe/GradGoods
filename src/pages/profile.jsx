@@ -124,7 +124,7 @@ export default function Profile() {
 
           <div className="flex flex-col items-end">
             <h1 className="text-3xl font-bold"> 💰 Earnings: ${calculateEarnings()}</h1>
-            <h1 className="text-3xl font-bold text-green-500"> 🍃 ${pounds} of waste saved</h1>
+            <h1 className="text-3xl font-bold text-green-500"> 🍃 {pounds}lbs of waste saved</h1>
           </div>
         </div>
 
