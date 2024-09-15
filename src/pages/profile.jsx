@@ -130,7 +130,7 @@ export default function Profile() {
               }}
             />
             <div className="flex items-center">
-              <Heading>{user.fullName}</Heading>
+              <Heading>{user.username}</Heading>
             </div>
           </div>
 
@@ -167,7 +167,7 @@ export default function Profile() {
                   active ? "text-gray-500" : "text-black"
                 }`}
               >
-                Inactive
+                Complete/Inactive
               </p>
             </div>
           </div>
