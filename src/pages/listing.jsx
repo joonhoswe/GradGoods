@@ -32,6 +32,7 @@ export default function Listing() {
     try {
       // Delete the listing from the database
       await axios.delete(`http://127.0.0.1:8000/api/delete/${item.id}`);
+      const imageUrls = item.imageURLs.split(",");
 
       // Delete images from AWS S3
       for (const imageUrl of imageUrls) {
@@ -51,9 +52,25 @@ export default function Listing() {
     }
   };
 
-  const handleUpdate = async (item) => {
-    //todo: fill this in
-  };
+  // const handleUpdate = async (item) => {
+  //     try {
+  //       const response = await axios.post(
+  //         "http://127.0.0.1:8000/api/post/",
+  //         dataForSql
+  //       );
+  //       setPosted(true);
+  //       clearForm();
+  //       console.log("Response:", response.data);
+  //     } catch (error) {
+  //       console.error(
+  //         "Error:",
+  //         error.response ? error.response.data : error.message
+  //       );
+  //     } finally {
+  //       setSubmitClicked(false);
+  //     }
+  //   }
+  //   };
 
   useEffect(() => {
     if (isSignedIn && user) {
@@ -99,9 +116,9 @@ export default function Listing() {
     }
   }, [curr]);
 
-  if (!curr) {
-    return <div>does not exist</div>;
-  }
+  // if (!curr) {
+  //   return <div>does not exist</div>;
+  // }
 
   const decreaseImageIndex = () => {
     setCurrImage(currImage - 1);
