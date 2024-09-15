@@ -17,7 +17,7 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import MyImage from './img/back.png';
+import MyImage from '../public/lightbulb.png';
 
 function App() {
   const [school, setSchool] = useState("");
@@ -105,29 +105,24 @@ function Home({
   showSuggestions,
 }) {
   return (
-    // Background
-    <div style = {{ 
-      backgroundImage: `url(${MyImage}),url(${MyImage})`,
-      // backgroundSize: 'cover', 
-      // backgroundPosition: 'left',
-      backgroundPosition: 'left 270%, right 270%',
-      backgroundRepeat: 'no-repeat, no-repeat',
-      height: '100vh', 
-      width: '100vw', 
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'left'
-      }}>
-  {/* // <div style={{ backgroundImage: `url(${MyImage})`, backgroundSize: 'cover', backgroundPosition: 'center',}}> */}
+    <div>
+      <img src='../public/lightbulb.png' alt='Lightbulb' style={{position: 'absolute', right: 0, height: 500, paddingRight:180}} />
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
       </div>
       
-      <div className="mt-[35vh]" style = {{zIndex:2}}>
-        <Heading className="text-center" as="h2" size="3xl" p={0} noOfLines={1}>
-          GradGoods
+      <div className="mt-[25vh]" style = {{zIndex:2}}>
+        <Heading className="text-left" as="h2" size="4xl" p={0} noOfLines={1} paddingLeft="100px">
+          <span style={{ fontWeight: 'normal' }}>Grad</span>
+          <span style={{ fontWeight: 'bold', color: '#5abe23' }}>Goods</span>
         </Heading>
-        <div className="flex flex-row justify-center">
+        
+      <div className="text-left" style={{ paddingLeft: "100px", fontSize: '40px',paddingTop: '40px'}}>
+        <p><span style={{ fontWeight: 'bold', color: '#5abe23' }}>Reduce</span> Waste.</p>
+        <p><span style={{ fontWeight: 'bold', color: '#5abe23' }}>Save</span> Money.</p>
+        <p><span style={{ fontWeight: 'bold', color: '#5abe23' }}>Foster</span> Community.</p>
+      </div>
+        <div className="flex flex-row justify-left" style={{paddingLeft:'100px'}}>
           <InputGroup size="lg" width="45vw" className="mt-8" >
 
             <Input
