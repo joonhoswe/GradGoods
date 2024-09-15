@@ -26,17 +26,10 @@ export default function postListing() {
 
     const [submitClicked, setSubmitClicked] = useState(false);
 
-    const eduEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+\.edu$/;
-
     const isEmailValid = user ? user.primaryEmailAddress.emailAddress.substring(user.primaryEmailAddress.emailAddress.length - 4) == '.edu' : true;
-    // abc@mit.edu
+
     if (user) {
         const owner = user.username
-        console.log(user);
-        console.log(user.primaryEmailAddress.emailAddress);
-        console.log(isEmailValid);
-        console.log(user.primaryEmailAddress.emailAddress.substring(user.primaryEmailAddress.emailAddress.length - 4));
-        console.log(user.primaryEmailAddress.emailAddress.substring(user.primaryEmailAddress.emailAddress.length - 4) == '.edu');
     }
     
     const [itemName, setItemName] = useState('');
