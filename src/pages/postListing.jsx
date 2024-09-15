@@ -315,6 +315,7 @@ export default function PostListing() {
                                 <option value="Electronics">Electronics</option>
                                 <option value="Shoes">Shoes</option>
                                 <option value="Textbooks">Textbooks</option>
+                                <option value="Miscellaneous">Miscellaneous</option>
                             </select>
                         </div>
 

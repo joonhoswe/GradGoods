@@ -27,6 +27,7 @@ export default function Browse() {
     "Electronics",
     "Shoes",
     "Textbooks",
+    "Miscellaneous"
   ];
   const [selectedTag, setSelectedTag] = useState("View All");
   const { isSignedIn, user, isLoaded } = useUser();
