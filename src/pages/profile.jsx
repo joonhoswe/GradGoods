@@ -11,7 +11,12 @@ import OpenAI from "openai";
 export default function Profile() {
   const { isSignedIn, user, isLoaded } = useUser();
   const navigate = useNavigate();
+  const openai = new OpenAI({
+    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true,
+  });
 
+  const [pounds, setPounds] = useState(0);
   const [listings, setListings] = useState([]);
   const [userListings, setUserListings] = useState([]);
   const [userActiveListings, setUserActiveListings] = useState([]);
@@ -64,22 +69,25 @@ export default function Profile() {
         }
       };
 
-      const getPounds = async () => {
-        // const completion = await openai.chat.completions.create({
-        //   model: "gpt-4o-mini",
-        //   messages: [
-        //     { role: "system", content: "You are a helpful assistant." },
-        //     {
-        //       role: "user",
-        //       content: "Write a haiku about recursion in programming.",
-        //     },
-        //   ],
-        // });
-        // console.log(completion.choices[0].message);
+      const getPounds = async (item) => {
+        const completion = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: "You are a helpful assistant." },
+            {
+              role: "user",
+              content: `Tell me with an integer number how many pounds a ${item} would weigh. Return your response as just a number and nothing else. If you don't understand for any given object, just return 0.`,
+            },
+          ],
+        });
+        console.log(completion.choices[0].message.content);
       };
 
       fetchData();
-      getPounds();
+      userInactiveListings.forEach((listing) => {
+        const p = getPounds(listing.price);
+        setPounds(pounds + p);
+      });
     }
   }, [isSignedIn, user]); // Dependencies
 
@@ -141,8 +149,7 @@ export default function Profile() {
               💰 Earnings: ${calculateEarnings()}
             </h1>
             <h1 className="text-3xl font-bold text-green-500">
-              {" "}
-              🍃 1,293lbs of waste saved{" "}
+              🍃 ${pounds} of waste saved
             </h1>
           </div>
         </div>
