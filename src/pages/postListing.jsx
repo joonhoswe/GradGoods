@@ -35,7 +35,7 @@ export default function postListing() {
     ? user.primaryEmailAddress.emailAddress.substring(
         user.primaryEmailAddress.emailAddress.length - 4
       ) == ".edu"
-    : true;
+    : false;
 
   useEffect(() => {
     if (user) {
