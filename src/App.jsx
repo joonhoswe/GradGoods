@@ -65,7 +65,7 @@ function App() {
       navigate("/browse", { state: { school : properSchool } }); 
       setError("");
     } else {
-      setError("No results found.");
+      setError("No results found. Please try again.");
     }
   };
 
@@ -174,8 +174,8 @@ function Home({ onSearch, onInputChange, school, suggestions, handleSelectSugges
             </InputRightAddon>
           </InputGroup>
         </div>
-        <div className="flex flex-row justify-center">
-          {error && (
+        <div className="flex flex-row justify-left ">
+        {error && (
             <Box textAlign="center" mt="2" width="45vw">
               <Text color="red.500" fontSize="sm">
                 {error}
