@@ -9,24 +9,24 @@ from .models import Listing
 from .serializers import ListingSerializer
 
 # post listing
-# @api_view(['POST'])
-# def createListing(request):
-#     if request.method == 'POST':
-#         #if method request is POST then create a ListingSerializer instance 
-#         #with the data that was entered from the website
-#         serializer = ListingSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             #saves the serializer into the database 
-#             #returns HTTP status code 201 (successful)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         #if serializer isn't valid then return unsuccessful HTTP request
-#         print(serializer.errors)
+@api_view(['POST'])
+def createListing(request):
+    if request.method == 'POST':
+        #if method request is POST then create a ListingSerializer instance 
+        #with the data that was entered from the website
+        serializer = ListingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            #saves the serializer into the database 
+            #returns HTTP status code 201 (successful)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #if serializer isn't valid then return unsuccessful HTTP request
+        print(serializer.errors)
         
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Update or post a listing
-@api_view(['PATCH', 'POST'])
+@api_view(['PATCH'])
 def makeListing(request, id):
     # Retrieve the listing object
     listing = get_object_or_404(Listing, id=id)

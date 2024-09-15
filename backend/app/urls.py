@@ -5,7 +5,8 @@ from app import views
 urlpatterns=[
     #arguments: 1. url pattern, 2. function to be called (from views.py)
     #3. name which can be used to reference
-    path('post/', makeListing, name='makeListing'),
+    path('post/', makeListing, name='createListing'),
+    path('patch/', makeListing, name='makeListing'),
     path('get/', getListing, name='getListing'),
     path('delete/<int:id>', deleteListing, name='deleteListing'),
 ]
