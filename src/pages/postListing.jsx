@@ -38,6 +38,7 @@ export default function postListing() {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(0);
     const [active, setActive] = useState(true);     // listing is default by active, will be turned off from profile when listing is deleted or closed
+    const [size, setSize] = useState('N/A');
 
     const [imageObjects, setImageObjects] = useState([]);   // stores image files
     const [fileNames, setFileNames] = useState([]);     // stores parsed file names
@@ -74,6 +75,7 @@ export default function postListing() {
             school,
             imageURLs, // passed as a comma-separated string
             active,
+            size,
         };
 
         console.log("Submitting form: ", dataForSql);
@@ -124,6 +126,7 @@ export default function postListing() {
         setPrice(0);
         setFileNames([]);
         setImageObjects([]);
+        setSize('N/A');
     };
 
     return (
