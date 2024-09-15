@@ -55,6 +55,7 @@ export default function Listing() {
     if (curr) {
       setImagesArr(curr.imageURLs.split(","));
       console.log(curr.imageURLs.split(","));
+      setIsMyListing(user.username === curr.username);
     }
   }, [curr]);
 
@@ -86,7 +87,8 @@ export default function Listing() {
             color={currImage > 0 ? "gray.700" : "gray.300"}
           />
           <Image
-            boxSize="68%"
+            width="450px"
+            height="450px"
             objectFit="cover"
             src={imagesArr[currImage]}
             alt="product-image"
@@ -102,7 +104,7 @@ export default function Listing() {
             }
           />
         </div>
-        <div className="w-[50%]">
+        <div className="w-[50%] ml-10">
           <Heading size="2xl">{curr.itemName}</Heading>
           <p className="mb-4 text-2xl font-medium">{curr.owner}</p>
           {curr.itemCategory === "Clothing" || curr.itemCategory === "Shoes" ? (
@@ -112,9 +114,11 @@ export default function Listing() {
             Category: {curr.itemCategory}
           </p>
           <p className="mb-4 text-2xl font-bold">${curr.price}</p>
-          <Button size="lg" colorScheme="green">
-            Buy now
-          </Button>
+          {isMyListing ? null : (
+            <Button size="lg" colorScheme="green">
+              Buy now
+            </Button>
+          )}
           <p className="mb-2 text-2xl font-bold mt-8">Description</p>
           <p className="text-lg">{curr.description}</p>
         </div>
