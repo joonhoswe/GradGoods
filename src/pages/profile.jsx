@@ -4,6 +4,7 @@ import Navbar from "../components/navbar";
 import { Heading, Divider } from "@chakra-ui/react";
 import axios from 'axios';
 import placeholder from '../assets/placeholder.jpeg';
+import ItemCard from "../components/ItemCard";
 import { use } from "framer-motion/client";
 
 export default function Profile() {
@@ -12,6 +13,7 @@ export default function Profile() {
   // Move the hooks to the top level of the component
   const [listings, setListings] = useState([]);
   const [userListings, setUserListings] = useState([]);
+  const [userActiveListings, setUserActiveListings] = useState([]);
   const [userInactiveListings, setUserInactiveListings] = useState([]);
 
   const [active, setActive] = useState(true);
@@ -25,12 +27,17 @@ export default function Profile() {
           if (user) {
             setListings(response.data);
             const userJoinedListings = database.filter(listing =>
-              listing.owner.includes(user.username)
+              listing.owner == (user.username)
             );
             setUserListings(userJoinedListings);
+            
+            const activeListings = userJoinedListings.filter(listing =>
+              listing.active == (true)
+            );
+            setUserActiveListings(activeListings);
 
             const inactiveListings = userJoinedListings.filter(listing =>
-              listing.active.includes(false)
+              listing.active == (false)
             );
             setUserInactiveListings(inactiveListings);
           }
@@ -119,48 +126,15 @@ export default function Profile() {
             </div>
             <div className="flex flex-row w-3/4 h-full">
               <div className='flex gap-6 items-center flex-wrap'>
-                {active ? userListings.map((listing, index) => {
-                const imagesArray = listing.imageURLs ? listing.imageURLs.split(',') : []; // Split the 'images' string into an array
+                {active ? userActiveListings.map((listing, index) => {
                 return ( 
-                  <div
-                    key={index}
-                    className='relative flex flex-col h-56 w-56 hover:cursor-pointer border border-gray-200'
-                  >
-                    <img
-                      src={!imagesArray[0] ? placeholder : imagesArray[0]}
-                      alt='Listing Image'
-                      className='h-1/2 w-full'
-                    />
-                    <div className='flex flex-col space-y-1 justify-start text-start px-4'>
-                      <div className='flex flex-col space-y-1'>
-                        <p className='text-xs'> {listing.itemCategory} </p>
-                        <h1 className='text-lg font-bold'> {listing.itemName} </h1>
-                        <p className='text-md'> ${listing.price} </p>
-                      </div>
-                    </div>
-                  </div>
-                );
+                  <ItemCard item={listing} key={index} />
+                )
+                
               }) : 
               userInactiveListings.map((listing, index) => {
-                const imagesArray = listing.imageURLs ? listing.imageURLs.split(',') : []; // Split the 'images' string into an array
                 return ( 
-                  <div
-                    key={index}
-                    className='relative flex flex-col h-56 w-56 hover:cursor-pointer border border-gray-200'
-                  >
-                    <img
-                      src={!imagesArray[0] ? placeholder : imagesArray[0]}
-                      alt='Listing Image'
-                      className='h-1/2 w-full'
-                    />
-                    <div className='flex flex-col space-y-1 justify-start text-start px-4'>
-                      <div className='flex flex-col space-y-1'>
-                        <p className='text-xs'> {listing.itemCategory} </p>
-                        <h1 className='text-lg font-bold'> {listing.itemName} </h1>
-                        <p className='text-md'> ${listing.price} </p>
-                      </div>
-                    </div>
-                  </div>
+                  <ItemCard item={listing} key={index} />
                 )
               })}
               </div>
