@@ -11,8 +11,6 @@ import OpenAI from "openai";
 export default function Profile() {
   const { isSignedIn, user, isLoaded } = useUser();
   const navigate = useNavigate();
-  // const key = process.env.OPENAI_API_KEY;
-  // const openai = new OpenAI({ apiKey: key });
 
   const [listings, setListings] = useState([]);
   const [userListings, setUserListings] = useState([]);
