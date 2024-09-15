@@ -5,10 +5,20 @@ import { Heading, Divider, Button } from "@chakra-ui/react";
 import axios from "axios";
 import ItemCard from "../components/ItemCard";
 import { useNavigate } from "react-router-dom";
+import BrowseItemDisplay from "../components/BrowseItemDisplay";
+import { useLocation } from "react-router-dom";
 import OpenAI from "openai";
 
 export default function Profile() {
   const { isSignedIn, user, isLoaded } = useUser();
+
+  const location = useLocation();
+  const { school } = location.state || {};
+
+  const isEmailValid = user
+    ? user.primaryEmailAddress.emailAddress.endsWith(".edu")
+    : false;
+
   const navigate = useNavigate();
   const openai = new OpenAI({
     apiKey: import.meta.env.VITE_OPENAI_API_KEY,

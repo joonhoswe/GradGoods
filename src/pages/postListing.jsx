@@ -326,9 +326,9 @@ export default function PostListing() {
                 id="itemCategory"
                 value={itemCategory}
                 onChange={(e) => setItemCategory(e.target.value)}
-                // className={`p-2 border rounded-lg ${
-                //   !isEmailValid ? "cursor-not-allowed" : "cursor-text"
-                // }`}
+                className={`p-2 border rounded-lg ${
+                  !isEmailValid ? "cursor-not-allowed" : "cursor-text"
+                }`}
                 disabled={!isEmailValid} // Disable input if the email is not valid
               >
                 <option value="">Select a category</option>

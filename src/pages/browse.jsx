@@ -163,7 +163,7 @@ export default function Browse() {
           p={0}
           noOfLines={1}
         >
-          {school}'s Items
+          Goods @ {school}:
         </Heading>
         <div className="flex flex-row justify-between">
           <HStack spacing="8px">
