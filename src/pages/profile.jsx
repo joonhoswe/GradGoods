@@ -10,13 +10,15 @@ import { use } from "framer-motion/client";
 export default function Profile() {
   const { isSignedIn, user, isLoaded } = useUser();
 
-  // Move the hooks to the top level of the component
   const [listings, setListings] = useState([]);
   const [userListings, setUserListings] = useState([]);
   const [userActiveListings, setUserActiveListings] = useState([]);
   const [userInactiveListings, setUserInactiveListings] = useState([]);
 
   const [active, setActive] = useState(true);
+
+
+// for inactive listings, add up all the prices to calculate money earned
 
   useEffect(() => {
     if (isSignedIn && user) {
