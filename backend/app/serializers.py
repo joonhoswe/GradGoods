@@ -1,11 +1,11 @@
-from django.urls import path
-from .views import *
-from app import views
+from rest_framework import serializers
+from .models import Listing
 
-urlpatterns=[
-    #arguments: 1. url pattern, 2. function to be called (from views.py)
-    #3. name which can be used to reference
-    path('post/', createListing, name='createListing'),
-    path('get/', getListing, name='getListing'),
-    path('delete/<int:id>', deleteListing, name='deleteListing'),
-]
+#purpose: serializers in django's rest framework converts data
+#types from foreign data types into python data types
+class ListingSerializer(serializers.ModelSerializer):
+    class Meta:
+        #sets model to the component from models.py
+        model = Listing
+        #includes all fields of model
+        fields = '__all__' 
