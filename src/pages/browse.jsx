@@ -194,7 +194,7 @@ export default function Browse() {
             </Box>
           )}
         </HStack>
-        <div className="mt-8">
+        <div className="mt-8 mb-24">
           <BrowseItemDisplay items={listings} />
         </div>
       </div>
