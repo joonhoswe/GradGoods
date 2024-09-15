@@ -27,7 +27,7 @@ def createListing(request):
 
 # Update or post a listing
 @api_view(['PATCH'])
-def makeListing(request, id):
+def updateListing(request, id):
     # Retrieve the listing object
     listing = get_object_or_404(Listing, id=id)
     
