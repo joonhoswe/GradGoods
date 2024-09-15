@@ -7,6 +7,7 @@ import AWS from "aws-sdk";
 import { allSchools } from "../schoolData.js";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { CloseIcon } from "@chakra-ui/icons";
 
 export default function PostListing() {
   const navigate = useNavigate();
@@ -267,7 +268,13 @@ export default function PostListing() {
                     >
                       {name}
                     </p>
-                    <button
+                    <CloseIcon
+                      boxSize={4}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleFileDelete(index)}
+                      color="red.400"
+                    />
+                    {/* <button
                       onClick={() => handleFileDelete(index)}
                       className={`text-red-500 text-sm hover:text-gray-400 transition ease-in-out duration-300 ${
                         !isEmailValid ? "cursor-not-allowed" : "cursor-pointer"
@@ -276,7 +283,7 @@ export default function PostListing() {
                       disabled={!isEmailValid}
                     >
                       x
-                    </button>
+                    </button> */}
                   </div>
                 ))}
               </div>
@@ -326,9 +333,9 @@ export default function PostListing() {
                 id="itemCategory"
                 value={itemCategory}
                 onChange={(e) => setItemCategory(e.target.value)}
-                // className={`p-2 border rounded-lg ${
-                //   !isEmailValid ? "cursor-not-allowed" : "cursor-text"
-                // }`}
+                className={`p-2 border rounded-lg ${
+                  !isEmailValid ? "cursor-not-allowed" : "cursor-text"
+                }`}
                 disabled={!isEmailValid} // Disable input if the email is not valid
               >
                 <option value="">Select a category</option>
@@ -406,7 +413,7 @@ export default function PostListing() {
                 Price
               </label>
               <div className="flex flex-row items-center">
-                <p className="text-lg font-medium">$</p>
+                <p className="text-lg font-medium mr-2">$</p>
                 <input
                   id="price"
                   type="number"
