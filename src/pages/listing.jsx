@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import { useParams } from "react-router-dom";
+import Navbar from "../components/navbar";
 
 export default function Listing() {
   const [listings, setListings] = useState([]);
@@ -45,9 +46,22 @@ export default function Listing() {
     }
   }, [listings]);
 
+  if (!curr) {
+    return <div>does not exist</div>;
+  }
+
   return (
     <div>
-      <h1></h1>
+      <div>
+        <Navbar />
+      </div>
+      <div className="mt-20 mx-[5vw] flex flex-row justify-between">
+        <div className="w-[50%]">image</div>
+        <div className="w-[50%]">
+          <h1>{curr.itemName}</h1>
+          <p>{curr.owner}</p>
+        </div>
+      </div>
     </div>
   );
 }
