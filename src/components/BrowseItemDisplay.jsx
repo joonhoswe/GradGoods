@@ -2,8 +2,9 @@ import ItemCard from "./ItemCard";
 import { Wrap, WrapItem } from "@chakra-ui/react";
 
 export default function BrowseItemDisplay({ items }) {
-  if (!items) {
-    return <div>no items match your search</div>;
+  console.log(items);
+  if (!items || items.length === 0) {
+    return <div>No items match your search!</div>;
   }
 
   return (
