@@ -108,8 +108,8 @@ export default function Profile() {
           </div>
 
           <div className="flex flex-col items-end">
-              <h1 className="text-4xl font-bold"> Earnings: $290 </h1>
-              <h1 className="text-4xl font-bold text-green-500"> 1,293lbs of waste saved </h1>
+              <h1 className="text-3xl font-bold"> 💰 Earnings: $290 </h1>
+              <h1 className="text-3xl font-bold text-green-500"> 🍃 1,293lbs of waste saved </h1>
           </div>
         </div>
         
