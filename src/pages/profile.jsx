@@ -44,7 +44,7 @@ export default function Profile() {
           const activeListings = userJoinedListings.filter(
             (listing) => listing.active === true
           );
-          console.log(activeListings);
+
           setUserActiveListings(activeListings);
 
           const inactiveListings = userJoinedListings.filter(
@@ -56,7 +56,25 @@ export default function Profile() {
         }
       };
 
+      const getPounds = async (item) => {
+        const completion = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: "You are a helpful assistant." },
+            {
+              role: "user",
+              content: `Tell me with an integer number how many pounds an average ${item} would weigh. Return your response as just a number and nothing else. If you don't understand for any given object, just return 0.`,
+            },
+          ],
+        });
+        console.log(completion.choices[0].message.content);
+      };
+
       fetchData();
+      userInactiveListings.forEach((listing) => {
+        const p = getPounds(listing.itemName);
+        setPounds(pounds + p);
+      });
       calculateEarnings();
     }
   }, [isSignedIn, isLoaded, user, isMarkingComplete]);
@@ -183,4 +201,5 @@ export default function Profile() {
       </div>
     </div>
   );
+  
 }
