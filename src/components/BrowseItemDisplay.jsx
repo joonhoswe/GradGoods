@@ -2,7 +2,7 @@ import ItemCard from "./ItemCard";
 import { Wrap, WrapItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-export default function BrowseItemDisplay({ items }) {
+export default function BrowseItemDisplay({ items, isEmailValid }) {
   const navigate = useNavigate();
   console.log(items);
   if (!items || items.length === 0) {
@@ -10,7 +10,9 @@ export default function BrowseItemDisplay({ items }) {
   }
 
   const handleCardClick = (id) => {
-    navigate(`/listing/${id}`);
+    if (isEmailValid) {
+      navigate(`/listing/${id}`);
+    }
   };
 
   return (
@@ -19,7 +21,10 @@ export default function BrowseItemDisplay({ items }) {
         console.log(item.id);
         return (
           <WrapItem key={item.id}>
-            <div onClick={() => handleCardClick(item.id)}>
+            <div
+              onClick={() => handleCardClick(item.id)}
+              className={isEmailValid ? 'cursor-pointer' : 'cursor-not-allowed'}
+            >
               <ItemCard item={item} />
             </div>
           </WrapItem>
