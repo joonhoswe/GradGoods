@@ -19,13 +19,20 @@ export default function postListing() {
         });
     }, []);
 
+    const { isSignedIn, user, isLoaded } = useUser();
+
     const [posted, setPosted] = useState(false);
     const [listings, setListings] = useState([]);
 
     const [submitClicked, setSubmitClicked] = useState(false);
 
-    const { isSignedIn, user, isLoaded } = useUser();
-    const owner = user.username
+    const eduEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+\.edu$/;
+
+    const isEmailValid = user ? eduEmailRegex.test(user.primaryEmailAddress.emailAddress) : false;
+
+    if (user) {
+        const owner = user.username
+    }
     
     const [itemName, setItemName] = useState('');
     const [itemCategory, setItemCategory] = useState('');
@@ -124,6 +131,14 @@ export default function postListing() {
     return (
     <>
         <Navbar/>
+        
+        {!isEmailValid && 
+            <div className="flex items-center justify-center w-full bg-red-500 text-white p-4 font-bold">
+                You MUST have a valid .edu email address to post a listing!
+            </div>
+        }
+        
+        
         <div className='h-full w-full lg:p-32 flex justify-center items-center'>
             <div className='flex flex-row h-full w-full'>
                 {/* left side of page */}
